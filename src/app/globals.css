@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* filepath: c:\Users\Gunjan Sarkar\OneDrive\Desktop\Applications\K beats\k-beats\src\app\globals.css */
+:root {
+  --color-primary: #1E3A8A;
+  --color-logo-outline: #FF6F00;
+  --color-accent1: #4CAF50;
+  --color-accent2: #FFD700;
+  --color-text-light: #F5F5F5;
+  --color-text-dark: #121212;
+  --color-neutral: #9E9E9E;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  font-family: var(--font-play), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+h1, h2, h3, .nav-link, .cta-button {
+  font-family: var(--font-orbitron), sans-serif;
+  letter-spacing: 0.05em;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: var(--font-orbitron), sans-serif;
+}
