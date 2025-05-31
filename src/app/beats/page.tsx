@@ -38,7 +38,7 @@ export default function BeatsPage() {
             Beats Coming Soon
           </h1>
           <p className="text-xl md:text-2xl text-[#F5F5F5] max-w-2xl mx-auto">
-            We're crafting something special. Our beat library is currently under development.
+            We&apos;re crafting something special. Our beat library is currently under development.
           </p>
 
           {/* Metronome Animation */}

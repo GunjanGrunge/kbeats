@@ -11,7 +11,7 @@ export default function Media() {
       title: '1. Logo',
       content: (
         <div className="space-y-4">
-          <p className="text-lg">Primary Logo features "K BEATS" in Orbitron for a futuristic, tech-driven vibe.</p>
+          <p className="text-lg">Primary Logo features &quot;K BEATS&quot; in Orbitron for a futuristic, tech-driven vibe.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">            <div className="bg-[#020126]/30 backdrop-blur-sm p-6 rounded-lg flex items-center justify-center">
               <Image
                 src="/k-beats-logo.png"
@@ -104,9 +104,8 @@ export default function Media() {
               <p>Designed to speak to creators, dreamers, and rhythm seekers.</p>
             </div>
             <div>
-              <h3 className="text-[#FFD700] mb-2">Example</h3>
-              <blockquote className="border-l-4 border-[#4CAF50] pl-4 italic">
-                "Welcome to the sound playground. At K BEATS, every drop is engineered to move minds and bodies."
+              <h3 className="text-[#FFD700] mb-2">Example</h3>              <blockquote className="border-l-4 border-[#4CAF50] pl-4 italic">
+                &quot;Welcome to the sound playground. At K BEATS, every drop is engineered to move minds and bodies.&quot;
               </blockquote>
             </div>
           </div>
@@ -119,7 +118,7 @@ export default function Media() {
       content: (
         <div className="bg-[#020126]/30 backdrop-blur-sm p-8 rounded-lg border border-[#4CAF50] shadow-lg">
           <p className="text-lg leading-relaxed">
-            K BEATS exists to empower creators with distinctive, emotionally rich beats that enhance storytelling across video, digital, and immersive platforms. We're more than music — we build cinematic energy into every soundscape.
+            K BEATS exists to empower creators with distinctive, emotionally rich beats that enhance storytelling across video, digital, and immersive platforms. We&apos;re more than music — we build cinematic energy into every soundscape.
           </p>
         </div>
       ),
