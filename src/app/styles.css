@@ -1,6 +1,5 @@
 :root {
-  --color-primary: #1E3A8A;
-  --color-logo-outline: #FF6F00;
+  --color-primary: #020126;
   --color-accent1: #4CAF50;
   --color-accent2: #FFD700;
   --color-text-light: #F5F5F5;
@@ -9,15 +8,9 @@
 }
 
 .hero-section {
+  background-color: var(--color-primary);
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;  background: 
-    radial-gradient(
-      circle at 50% 50%,
-      #1E3A8A 0%,
-      #01123d 40%,
-      #000420 100%
-    );
+  overflow: hidden;
 }
 
 /* Glowing orb effect */
@@ -28,12 +21,11 @@
   height: 150vh;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
+  transform: translate(-50%, -50%);  background: radial-gradient(
     circle at center,
-    rgba(255, 111, 0, 0.2) 0%,
-    rgba(255, 111, 0, 0.1) 20%,
-    rgba(255, 111, 0, 0.05) 40%,
+    rgba(76, 175, 80, 0.2) 0%,
+    rgba(76, 175, 80, 0.1) 20%,
+    rgba(76, 175, 80, 0.05) 40%,
     transparent 70%
   );
   animation: pulse 8s ease-in-out infinite;
@@ -108,23 +100,15 @@
 }
 
 .gradient-text {
-  color: var(--color-primary);
-  -webkit-text-stroke: 2px var(--color-text-light);
-  text-shadow: 
-    0 0 20px rgba(245, 245, 245, 0.3),
-    0 0 40px rgba(245, 245, 245, 0.2);
+  background: linear-gradient(135deg, var(--color-accent1), var(--color-accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(218, 242, 34, 0.3);
 }
 
 .nav-link {
   color: var(--color-text-light);
-  transition: color 0.3s ease;
-  font-size: 1.1rem;
-  text-decoration: none;
-}
-
-/* Mobile Menu Styles */
-.nav-link {
-  color: #F5F5F5;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -133,7 +117,7 @@
 }
 
 .nav-link:hover {
-  color: #FF6F00;
+  color: var(--color-accent1);
   transform: translateY(-1px);
 }
 
@@ -144,7 +128,7 @@
   height: 2px;
   bottom: -4px;
   left: 50%;
-  background-color: #FF6F00;
+  background-color: var(--color-accent1);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -170,35 +154,37 @@
 }
 
 /* Mobile Menu Backdrop */
-.backdrop-blur-sm {
+.mobile-menu {
+  background-color: rgba(2, 1, 38, 0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 .cta-button {
-  background: linear-gradient(45deg, var(--color-logo-outline), var(--color-accent1));
-  color: var(--color-text-light);
-  padding: 12px 32px;
-  border-radius: 30px;
+  background: var(--color-accent1);
+  color: var(--color-primary);
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
   transition: all 0.3s ease;
-  font-size: 1.1rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+}
+
+.cta-button:hover {
+  background: var(--color-accent2);
+  transform: translateY(-2px);
 }
 
 .cta-button.outlined {
   background: transparent;
-  border: 2px solid var(--color-accent2);
-}
-
-.cta-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  border: 2px solid var(--color-accent1);
+  color: var(--color-accent1);
 }
 
 .cta-button.outlined:hover {
-  background: var(--color-accent2);
+  background: var(--color-accent1);
   color: var(--color-primary);
 }
 
@@ -261,7 +247,7 @@
   min-height: 10px;
   background: linear-gradient(
     to top,
-    var(--color-logo-outline),
+    var(--color-accent2),
     transparent
   );
   border-radius: clamp(2px, 0.4vw, 4px);
@@ -293,7 +279,7 @@
   animation-delay: -2.4s;
   background: linear-gradient(
     to top,
-    var(--color-logo-outline),
+    var(--color-accent2),
     transparent
   );
 }
@@ -360,6 +346,17 @@
   align-items: center;
 }
 
+.social-links a {
+  color: var(--color-accent2);
+  transition: transform 0.3s ease, color 0.3s ease;
+  transform: scale(1.2);
+}
+
+.social-links a:hover {
+  transform: scale(1.3);
+  color: var(--color-accent2);
+}
+
 .footer-info {
   display: flex;
   flex-direction: column;
@@ -382,14 +379,12 @@
   .social-links {
     gap: clamp(1.5rem, 2.5vw, 2rem);
   }
-
   .social-links a {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+    transform: scale(1.2);
   }
 
   .social-links a:hover {
-    transform: scale(1.2);
+    transform: scale(1.3);
   }
 
   .footer-info {

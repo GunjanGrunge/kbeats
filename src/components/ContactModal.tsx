@@ -60,11 +60,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-[#1E3A8A] rounded-lg p-8 w-full max-w-md relative border border-[#FF6F00]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">      <div className="bg-[#020126] rounded-lg p-8 w-full max-w-md relative border border-[#ECF241]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white"
+          className="absolute top-4 right-4 text-gray-400 hover:text-[#DAF222]"
         >
           ✕
         </button>
@@ -73,37 +72,37 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label className="block text-sm text-gray-300">Your Email:</label>
+            <label className="block text-sm text-[#8A8C87]">Your Email:</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-[#FF6F00] focus:ring-1 focus:ring-[#FF6F00] transition-colors"
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-[#A6A049] focus:border-[#ECF241] focus:ring-1 focus:ring-[#ECF241] transition-colors"
               placeholder="Enter your email"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm text-gray-300">Subject:</label>
+            <label className="block text-sm text-[#8A8C87]">Subject:</label>
             <input
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               required
-              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-[#FF6F00] focus:ring-1 focus:ring-[#FF6F00] transition-colors"
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-[#A6A049] focus:border-[#ECF241] focus:ring-1 focus:ring-[#ECF241] transition-colors"
               placeholder="Enter subject"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm text-gray-300">Message:</label>
+            <label className="block text-sm text-[#8A8C87]">Message:</label>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
               rows={6}
-              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-[#FF6F00] focus:ring-1 focus:ring-[#FF6F00] transition-colors resize-none"
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-[#A6A049] focus:border-[#ECF241] focus:ring-1 focus:ring-[#ECF241] transition-colors resize-none"
               placeholder="Type your message here..."
             />
           </div>
@@ -111,7 +110,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
           <button
             type="submit"
             disabled={isSending}
-            className="w-full bg-[#FF6F00] hover:bg-[#FF8F00] text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
+            className="w-full bg-[#DAF222] hover:bg-[#ECF241] text-[#020126] font-bold py-2 px-4 rounded transition-colors disabled:opacity-50"
           >
             {isSending ? 'Sending...' : 'Send Message'}
           </button>

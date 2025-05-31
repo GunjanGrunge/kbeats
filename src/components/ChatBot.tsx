@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent, useRef, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 interface Message {
   text: string;
@@ -53,14 +54,15 @@ export default function ChatBot() {
         timestamp: new Date().toISOString(),
       },
     ]);
-    
-    // Clear chat history on the server
+      // Clear chat history on the server
     try {
       await fetch('/api/chat', {
         method: 'DELETE',
       });
+      toast.success('Chat history cleared successfully!');
     } catch (error) {
       console.error('Error clearing chat history:', error);
+      toast.error('Failed to clear chat history');
     }
     
     setShowClearWarning(false);
@@ -99,9 +101,7 @@ export default function ChatBot() {
 
       if (!response.ok) {
         throw new Error('Failed to get response');
-      }
-
-      const data = await response.json();
+      }      const data = await response.json();
 
       const botMessage: Message = {
         text: data.reply,
@@ -110,6 +110,7 @@ export default function ChatBot() {
       };
 
       setMessages((prev) => [...prev, botMessage]);
+      toast.success('Message sent successfully!');
     } catch (error) {
       console.error('Error:', error);
       const errorMessage: Message = {
@@ -118,16 +119,17 @@ export default function ChatBot() {
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
+      toast.error('Failed to send message. Please try again.');
     } finally {
       setIsTyping(false);
     }
   };
 
   if (!isOpen) {
-    return (
+    return (      
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-[#FF6F00] text-white flex items-center justify-center shadow-lg hover:bg-[#FF8F00] transition-colors"
+        className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-[#020126] text-[#ECF241] flex items-center justify-center shadow-lg hover:bg-[#DAF222] hover:text-[#020126] transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -145,22 +147,19 @@ export default function ChatBot() {
         </svg>
       </button>
     );
-  }
-
-  return (
+  }  return (
     <>
       <div className="fixed bottom-4 right-4 z-50">
-        <div className="w-96 bg-[#1E3A8A] rounded-lg shadow-xl">
+        <div className="w-96 bg-[#020126] rounded-lg shadow-xl">
           {/* Header */}
-          <div className="p-4 border-b border-gray-600 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <h3 className="text-white font-medium">Ria</h3>
+          <div className="p-4 border-b border-gray-600 flex items-center justify-between">            <div className="flex items-center space-x-3">              
+              <div className="w-3 h-3 bg-[#4CAF50] rounded-full"></div>
+              <h3 className="text-[#ECF241] font-medium">Ria</h3>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleClearChat}
-                className="text-gray-400 hover:text-white p-2"
+                className="text-[#ECF241] hover:text-[#A6A049] p-2"
                 title="Clear chat"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -169,7 +168,7 @@ export default function ChatBot() {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-[#ECF241] hover:text-[#A6A049]"
               >
                 ✕
               </button>
@@ -183,11 +182,10 @@ export default function ChatBot() {
                 key={idx}
                 className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}
               >
-                <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                <div                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
                     msg.isUser
-                      ? 'bg-[#FF6F00] text-white'
-                      : 'bg-gray-700 text-gray-100'
+                      ? 'bg-[#DAF222] text-[#020126]'
+                      : 'bg-[#8A8C87] text-[#ECF241]'
                   }`}
                 >
                   <p>{msg.text}</p>
@@ -220,7 +218,7 @@ export default function ChatBot() {
               <button
                 type="submit"
                 disabled={!inputMessage.trim()}
-                className="bg-[#FF6F00] text-white px-4 py-2 rounded hover:bg-[#FF8F00] transition-colors disabled:opacity-50"
+                className="bg-[#DAF222] text-[#020126] px-4 py-2 rounded hover:bg-[#ECF241] transition-colors disabled:opacity-50"
               >
                 Send
               </button>

@@ -57,7 +57,7 @@ export default function Home() {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden absolute top-16 left-0 w-full bg-[#1E3A8A] bg-opacity-95 backdrop-blur-sm py-4 px-6 shadow-lg">
+            <div className="md:hidden absolute top-16 left-0 w-full bg-[#020126] bg-opacity-95 backdrop-blur-sm py-4 px-6 shadow-lg">
               <div className="flex flex-col items-center gap-6">
                 <a href="#" 
                    className="nav-link" 
@@ -129,7 +129,7 @@ export default function Home() {
                 width: '100%',
                 height: 'auto',
                 maxWidth: '100%',
-                filter: 'drop-shadow(0 0 20px rgba(255, 111, 0, 0.3))',
+                filter: 'drop-shadow(0 0 20px rgba(236, 242, 65, 0.3))',
                 animation: 'float 3s ease-in-out infinite'
               }}
             />
@@ -146,7 +146,7 @@ export default function Home() {
           <p style={{ 
             fontFamily: 'var(--font-allison)',
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', 
-            color: '#FF6F00',
+            color: '#4DBF3B',
             maxWidth: '600px',
             margin: '0 auto 2rem',
             letterSpacing: '0.05em'

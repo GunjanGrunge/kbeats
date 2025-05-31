@@ -4,13 +4,14 @@
 
 /* filepath: c:\Users\Gunjan Sarkar\OneDrive\Desktop\Applications\K beats\k-beats\src\app\globals.css */
 :root {
-  --color-primary: #1E3A8A;
-  --color-logo-outline: #FF6F00;
-  --color-accent1: #4CAF50;
-  --color-accent2: #FFD700;
-  --color-text-light: #F5F5F5;
-  --color-text-dark: #121212;
-  --color-neutral: #9E9E9E;
+  --color-primary: #020126;
+  --color-accent1: #DAF222;
+  --color-accent2: #ECF241;
+  --color-accent3: #A6A049;
+  --color-bg-light: #8A8C87;
+  --color-text-light: #ECF241;
+  --color-text-dark: #020126;
+  --color-neutral: #8A8C87;
 }
 
 * {

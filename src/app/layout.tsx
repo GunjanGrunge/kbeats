@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Orbitron, Play, Allison } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const orbitron = Orbitron({
@@ -46,7 +47,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${orbitron.variable} ${play.variable} ${allison.variable}`}>{children}</body>
+      <body className={`${orbitron.variable} ${play.variable} ${allison.variable}`}>
+        {children}
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: '#020126',
+              color: '#ECF241',
+              border: '1px solid #4CAF50'
+            },
+            success: {
+              duration: 3000,
+              iconTheme: {
+                primary: '#4CAF50',
+                secondary: '#020126',
+              },
+            },
+            error: {
+              duration: 4000,
+              iconTheme: {
+                primary: '#ff4b4b',
+                secondary: '#020126',
+              },
+            }
+          }}
+        />
+      </body>
     </html>
   );
 }
