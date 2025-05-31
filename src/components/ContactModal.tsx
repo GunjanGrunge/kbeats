@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { toast } from 'react-hot-toast';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -34,14 +35,19 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to send message');
-      }
-
-      // Clear form fields
+      }      // Clear form fields
       setEmail('');
       setSubject('');
       setMessage('');
       
-      alert('Message sent successfully!');
+      toast.success('Message sent successfully!', {
+        style: {
+          background: '#020126',
+          color: '#F5F5F5',
+          border: '1px solid #4CAF50'
+        },
+        duration: 3000,
+      });
       onClose();
     } catch (error: unknown) {
       console.error('Error sending message:', error);
@@ -51,7 +57,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         errorMessage += error.message;
       }
       
-      alert(errorMessage);
+      toast.error(errorMessage, {
+        style: {
+          background: '#020126',
+          color: '#F5F5F5',
+          border: '1px solid #ff4b4b'
+        },
+        duration: 4000,
+      });
     } finally {
       setIsSending(false);
     }

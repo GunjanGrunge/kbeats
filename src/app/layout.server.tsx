@@ -1,9 +1,4 @@
 import { Orbitron, Play, Allison } from "next/font/google";
-import ClientLayout from "@/components/ClientLayout";
-import Footer from "@/components/Footer";
-import ChatBot from "@/components/ChatBot";
-import "./globals.css";
-import "./styles.css";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -27,17 +22,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const fonts = `${orbitron.variable} ${play.variable} ${allison.variable}`;
-
   return (
     <html lang="en">
-      <ClientLayout fonts={fonts}>
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          {children}
-          <Footer />
-          <ChatBot />
-        </div>
-      </ClientLayout>
+      <body className={`${orbitron.variable} ${play.variable} ${allison.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }

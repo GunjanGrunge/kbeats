@@ -126,18 +126,17 @@ export default function ChatBot() {
   };
 
   if (!isOpen) {
-    return (      
-      <button
+    return (        <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-50 w-14 h-14 rounded-full bg-[#020126] text-[#ECF241] flex items-center justify-center shadow-lg hover:bg-[#DAF222] hover:text-[#020126] transition-colors"
+        className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-[#020126] text-[#DAF222] flex items-center justify-center shadow-2xl hover:bg-[#DAF222] hover:text-[#020126] transition-all hover:scale-105 border-2 border-[#DAF222] hover:border-[#020126] animate-pulse"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          strokeWidth={2}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -148,11 +147,10 @@ export default function ChatBot() {
       </button>
     );
   }  return (
-    <>
-      <div className="fixed bottom-4 right-4 z-50">
-        <div className="w-96 bg-[#020126] rounded-lg shadow-xl">
+    <>      <div className="fixed bottom-8 right-8 z-50">
+        <div className="w-96 max-w-[90vw] bg-[#020126] rounded-xl shadow-2xl border border-[#DAF222]/20 overflow-hidden backdrop-blur-md">
           {/* Header */}
-          <div className="p-4 border-b border-gray-600 flex items-center justify-between">            <div className="flex items-center space-x-3">              
+          <div className="p-4 border-b border-[#DAF222]/20 flex items-center justify-between bg-[#020126]/90"><div className="flex items-center space-x-3">              
               <div className="w-3 h-3 bg-[#4CAF50] rounded-full"></div>
               <h3 className="text-[#ECF241] font-medium">Ria</h3>
             </div>
