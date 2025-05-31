@@ -1,0 +1,11 @@
+{
+  "buildCommand": "next build",
+  "cleanUrls": true,
+  "devCommand": "next dev",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://kbeats.vercel.app"
+  },
+  "framework": "nextjs",
+  "installCommand": "npm install",
+  "outputDirectory": ".next"
+}
