@@ -1,9 +1,14 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import ChatBot from "@/components/ChatBot";
+import ContactModal from "@/components/ContactModal";
 import "./styles.css";
 
 export default function Home() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <div className="hero-section" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Main Content */}
@@ -67,10 +72,13 @@ export default function Home() {
             Crafting soundscapes, one beat at a time.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <button className="cta-button">
+            <Link href="/beats" className="cta-button" style={{ textDecoration: 'none' }}>
               Explore Beats
-            </button>
-            <button className="cta-button outlined">
+            </Link>
+            <button 
+              className="cta-button outlined"
+              onClick={() => setIsContactModalOpen(true)}
+            >
               Contact Us
             </button>
           </div>
@@ -78,6 +86,10 @@ export default function Home() {
       </main>
 
       <ChatBot />
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

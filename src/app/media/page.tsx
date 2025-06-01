@@ -27,11 +27,21 @@ export default function Media() {
                 <li>SVG - Vector format for scalable usage</li>
                 <li>PNG - With transparency</li>
                 <li>JPG - For solid background usage</li>
-              </ul>
-              <div className="flex gap-4">
-                <button className="flex items-center gap-2 bg-[#4CAF50] text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors">
-                  <FaDownload /> Download Kit
-                </button>
+              </ul>              <div className="flex gap-4 flex-wrap">
+                <a 
+                  href="/downloads/Group-4.zip" 
+                  download
+                  className="flex items-center gap-2 bg-[#4CAF50] text-white px-4 py-2 rounded hover:bg-opacity-90 transition-colors"
+                >
+                  <FaDownload /> Download PNG Kit
+                </a>
+                <a 
+                  href="/downloads/Group 4.zip" 
+                  download
+                  className="flex items-center gap-2 bg-[#DAF222] text-[#020126] px-4 py-2 rounded hover:bg-opacity-90 transition-colors"
+                >
+                  <FaDownload /> Download SVG Kit
+                </a>
               </div>
             </div>
           </div>
@@ -122,15 +132,14 @@ export default function Media() {
           </p>
         </div>
       ),
-    },
-    {
+    },    {
       id: 'press-kit',
       title: '6. Press Kit',
       content: (
         <div className="space-y-8">
           <div className="bg-white bg-opacity-5 backdrop-blur-sm p-8 rounded-lg">
             {/* Brand Overview */}
-            <div className="mb-8">
+            <div>
               <h3 className="text-[#FFD700] text-xl font-medium mb-4">Brand Overview</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -167,16 +176,7 @@ export default function Media() {
               </div>
             </div>          </div>
 
-          {/* Download Pack Button */}
-          <div className="flex justify-center">
-            <button 
-              className="flex items-center gap-2 bg-[#4CAF50] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors"
-              onClick={() => alert('Press Kit download coming soon!')}
-            >
-              <FaDownload /> Download Full Press Kit
-            </button>
-          </div>
-        </div>
+          {/* Download Pack Button */}        </div>
       ),
     },
   ];
