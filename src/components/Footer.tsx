@@ -1,6 +1,6 @@
 'use client';
 
-import { FaYoutube, FaInstagram } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaSoundcloud } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -22,6 +22,14 @@ export default function Footer() {
             className="nav-link"
           >
             <FaInstagram size={20} style={{ color: 'var(--color-logo-outline)' }} />
+          </a>
+          <a
+            href="https://soundcloud.com/k-beats-291187445?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+          >
+            <FaSoundcloud size={20} style={{ color: 'var(--color-logo-outline)' }} />
           </a>
         </div>
         <div className="footer-info">
