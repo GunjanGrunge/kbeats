@@ -1,6 +1,49 @@
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import './HeroSection.css';
+
+// Animated counter component
+const AnimatedCounter = ({ target, suffix = '', duration = 2 }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  
+  useEffect(() => {
+    if (!isInView) return;
+    
+    let startTime;
+    let animationFrame;
+    
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+      
+      // Easing function for smooth deceleration
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      
+      setCount(Math.floor(easeOutQuart * target));
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [isInView, target, duration]);
+  
+  return (
+    <span ref={ref}>
+      {count}{suffix}
+    </span>
+  );
+};
 
 const HeroSection = ({ onOpenChat }) => {
   return (
@@ -77,7 +120,7 @@ const HeroSection = ({ onOpenChat }) => {
           </a>
         </motion.div>
 
-        {/* Stats */}
+        {/* Animated Stats */}
         <motion.div
           className="hero-stats"
           initial={{ opacity: 0 }}
@@ -85,17 +128,25 @@ const HeroSection = ({ onOpenChat }) => {
           transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="stat-item">
-            <span className="stat-number">500+</span>
+            <span className="stat-number">
+              <AnimatedCounter target={500} suffix="+" duration={2.5} />
+            </span>
             <span className="stat-label">Projects Delivered</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item">
-            <span className="stat-number">3</span>
+            <span className="stat-number">
+              <AnimatedCounter target={3} duration={1.5} />
+            </span>
             <span className="stat-label">Platforms</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item">
-            <span className="stat-number">24/7</span>
+            <span className="stat-number stat-24-7">
+              <span className="stat-24">24</span>
+              <span className="stat-slash">/</span>
+              <span className="stat-7">7</span>
+            </span>
             <span className="stat-label">Support</span>
           </div>
         </motion.div>
