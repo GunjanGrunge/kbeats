@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 from models import ChatMessage, ChatMessageCreate, ChatResponse, MusicInquiry
 from chatbot import get_chat_response
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from datetime import datetime
+import json
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -13,15 +15,10 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'myapp')]
 
 
-@router.post("/message", response_model=ChatResponse)
+@router.post("/message")
 async def send_message(chat_input: ChatMessageCreate):
-    """Send a message to the chatbot and get response"""
+    """Send a message to the chatbot and get streaming response"""
     try:
-        # Get conversation history for this session
-        history = await db.chat_messages.find(
-            {"session_id": chat_input.session_id}
-        ).sort("timestamp", 1).to_list(100)
-        
         # Save user message
         user_message = ChatMessage(
             session_id=chat_input.session_id,
@@ -30,53 +27,67 @@ async def send_message(chat_input: ChatMessageCreate):
         )
         await db.chat_messages.insert_one(user_message.dict())
         
-        # Get AI response
-        response_text = await get_chat_response(
-            chat_input.session_id,
-            chat_input.message,
-            history
-        )
-        
-        # Save assistant message
-        assistant_message = ChatMessage(
-            session_id=chat_input.session_id,
-            role="assistant",
-            content=response_text
-        )
-        await db.chat_messages.insert_one(assistant_message.dict())
-        
-        # Update or create inquiry record
+        # Create or update inquiry
         inquiry = await db.inquiries.find_one({"session_id": chat_input.session_id})
         if not inquiry:
             inquiry_data = MusicInquiry(
                 session_id=chat_input.session_id,
                 requirements=chat_input.message,
                 conversation_history=[
-                    {"role": "user", "content": chat_input.message, "timestamp": datetime.utcnow().isoformat()},
-                    {"role": "assistant", "content": response_text, "timestamp": datetime.utcnow().isoformat()}
+                    {"role": "user", "content": chat_input.message, "timestamp": datetime.utcnow().isoformat()}
                 ]
             )
             await db.inquiries.insert_one(inquiry_data.dict())
         else:
-            # Update existing inquiry
             await db.inquiries.update_one(
                 {"session_id": chat_input.session_id},
                 {
                     "$push": {
                         "conversation_history": {
-                            "$each": [
-                                {"role": "user", "content": chat_input.message, "timestamp": datetime.utcnow().isoformat()},
-                                {"role": "assistant", "content": response_text, "timestamp": datetime.utcnow().isoformat()}
-                            ]
+                            "role": "user", 
+                            "content": chat_input.message, 
+                            "timestamp": datetime.utcnow().isoformat()
                         }
                     }
                 }
             )
         
-        return ChatResponse(
-            session_id=chat_input.session_id,
-            response=response_text
+        # Stream response
+        async def generate_stream():
+            full_response = ""
+            async for chunk in get_chat_response(chat_input.session_id, chat_input.message):
+                full_response += chunk
+                yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+            
+            # Save complete assistant message
+            assistant_message = ChatMessage(
+                session_id=chat_input.session_id,
+                role="assistant",
+                content=full_response
+            )
+            await db.chat_messages.insert_one(assistant_message.dict())
+            
+            # Update inquiry with assistant response
+            await db.inquiries.update_one(
+                {"session_id": chat_input.session_id},
+                {
+                    "$push": {
+                        "conversation_history": {
+                            "role": "assistant",
+                            "content": full_response,
+                            "timestamp": datetime.utcnow().isoformat()
+                        }
+                    }
+                }
+            )
+            
+            yield f"data: {json.dumps({'done': True})}\n\n"
+        
+        return StreamingResponse(
+            generate_stream(),
+            media_type="text/event-stream"
         )
+        
     except Exception as e:
         print(f"Error in send_message: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

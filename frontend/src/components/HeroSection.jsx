@@ -13,16 +13,17 @@ const HeroSection = ({ onOpenChat }) => {
     canvas.height = window.innerHeight;
 
     const particles = [];
-    const particleCount = 50;
+    const particleCount = 60;
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
+        this.size = Math.random() * 3 + 1;
         this.speedX = Math.random() * 0.5 - 0.25;
         this.speedY = Math.random() * 0.5 - 0.25;
         this.opacity = Math.random() * 0.5 + 0.2;
+        this.color = Math.random() > 0.5 ? '128, 180, 191' : '242, 164, 68';
       }
 
       update() {
@@ -36,10 +37,13 @@ const HeroSection = ({ onOpenChat }) => {
       }
 
       draw() {
-        ctx.fillStyle = `rgba(230, 213, 224, ${this.opacity})`;
+        ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `rgba(${this.color}, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -59,8 +63,8 @@ const HeroSection = ({ onOpenChat }) => {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(102, 103, 171, ${0.1 * (1 - distance / 100)})`;
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(128, 180, 191, ${0.15 * (1 - distance / 150)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -80,8 +84,23 @@ const HeroSection = ({ onOpenChat }) => {
       canvas.height = window.innerHeight;
     };
 
+    // Parallax effect on mouse move
+    const handleMouseMove = (e) => {
+      const heroImage = document.querySelector('.hero-image');
+      if (heroImage) {
+        const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+        const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+        heroImage.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+      }
+    };
+
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   return (

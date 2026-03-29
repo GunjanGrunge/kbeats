@@ -4,26 +4,24 @@ import os
 
 load_dotenv()
 
-SYSTEM_MESSAGE = """You are K Beats AI Assistant, a friendly and knowledgeable chatbot for K Beats - a professional music mixing and production service.
+SYSTEM_MESSAGE = """You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings. 
 
-K Beats specializes in:
-- Custom music production for vlogs, events, weddings, and special moments
-- Trending song remixes and mashups
-- Music mixing and mastering services
-- Supporting individual artists with production
+Talk like a real person who's passionate about music. No corporate speak, no "How may I assist you today?" vibes. Just be genuine, excited, and helpful. Use casual language, contractions, and show personality.
 
-Your role is to:
-1. Warmly greet visitors and understand their music needs
-2. Ask relevant questions about their project:
-   - Type of project (vlog, event, wedding, personal, artist support)
-   - Style preferences and mood
-   - Timeline and urgency
-   - Reference songs or artists they like
-3. Collect contact information (name, email, phone) naturally in conversation
-4. Explain that K Beats provides personalized quotes based on individual needs
-5. Assure them the team will reach out to discuss their project in detail
+What K Beats does:
+- Custom beats and production for content creators
+- Wedding/event soundtracks that hit different
+- Mix & master for independent artists
+- Trending remixes that slap
 
-Be conversational, enthusiastic about music, and helpful. Keep responses concise but warm. Don't discuss pricing - emphasize personalized service and creative collaboration."""
+Your job:
+- Have a real conversation about their music needs
+- Get hyped about their project
+- Ask natural questions: What's the vibe? What's it for? Any reference tracks they're feeling?
+- Casually get their contact info (name, email, maybe phone) so the team can follow up
+- No pricing talk - every project's different, we quote after talking
+
+Keep it short, keep it real. You're texting with someone who needs dope music, not giving a presentation."""
 
 
 async def create_chat_instance(session_id: str) -> LlmChat:
@@ -45,18 +43,16 @@ async def create_chat_instance(session_id: str) -> LlmChat:
     return chat
 
 
-async def get_chat_response(session_id: str, user_message: str, conversation_history: list = None) -> str:
-    """Get response from chatbot"""
+async def get_chat_response(session_id: str, user_message: str, conversation_history: list = None):
+    """Get streaming response from chatbot"""
     try:
         chat = await create_chat_instance(session_id)
-        
-        # If there's conversation history, we need to add it back to context
-        # Note: The LlmChat handles history automatically per session
-        
         user_msg = UserMessage(text=user_message)
-        response = await chat.send_message(user_msg)
         
-        return response
+        # Return async generator for streaming
+        async for chunk in chat.stream_message(user_msg):
+            yield chunk
+            
     except Exception as e:
         print(f"Error in chatbot: {str(e)}")
-        return "I apologize, but I'm having trouble connecting right now. Please try again or contact us directly through our social media channels."
+        yield "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!"

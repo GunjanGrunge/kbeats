@@ -1,4 +1,4 @@
-/* Header Styles */
+/* Header Styles - Teal/Orange Theme */
 .header {
   position: fixed;
   top: 0;
@@ -10,10 +10,10 @@
 }
 
 .header.scrolled {
-  background: rgba(33, 6, 53, 0.9);
+  background: rgba(10, 31, 42, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(128, 180, 191, 0.2);
   padding: 1rem 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
@@ -36,10 +36,11 @@
   font-size: 1.75rem;
   font-weight: 900;
   letter-spacing: 0.1em;
-  background: linear-gradient(135deg, #E5D5E0 0%, #6667AB 100%);
+  background: linear-gradient(135deg, #80B4BF 0%, #F2A444 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(242, 164, 68, 0.3));
 }
 
 /* Navigation */
@@ -52,7 +53,7 @@
 .nav-link {
   background: none;
   border: none;
-  color: rgba(229, 213, 224, 0.9);
+  color: rgba(181, 210, 217, 0.9);
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -68,12 +69,12 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(135deg, #7B337E 0%, #6667AB 100%);
+  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
   transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #E5D5E0;
+  color: #F2A444;
 }
 
 .nav-link:hover::after {
@@ -95,7 +96,7 @@
 .menu-toggle span {
   width: 25px;
   height: 2px;
-  background: #E5D5E0;
+  background: #F2A444;
   transition: all 0.3s ease;
 }
 
@@ -111,14 +112,14 @@
     right: -100%;
     width: 70%;
     height: 100vh;
-    background: rgba(33, 6, 53, 0.98);
+    background: rgba(10, 31, 42, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2.5rem;
     transition: right 0.3s ease;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(128, 180, 191, 0.2);
   }
 
   .nav.open {

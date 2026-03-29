@@ -48,6 +48,51 @@ Build a futuristic landing page for K Beats music channel (Instagram, YouTube, S
   - Maintains conversation context per session
   - Stores all conversations in MongoDB
 
+## Color Palette Updates (Dec 29, 2025)
+**New Teal/Orange Theme:**
+- Primary Dark: #34596A (dark teal)
+- Primary Light: #80B4BF (light teal/cyan)
+- Accent Primary: #D97F30 (orange)
+- Accent Light: #F2A444 (light orange/gold)
+- Accent Subtle: #B5D2D9 (very light cyan)
+
+## Chatbot Improvements (Dec 29, 2025)
+
+### Personality Enhancement
+- Changed from robotic corporate assistant to human, casual conversationalist
+- Uses natural language: "Yo! What's good?", "I gotchu", "heat for your project"
+- No formal "How may I assist you" vibes
+- Shows genuine excitement and personality
+
+### Streaming Responses
+- Implemented Server-Sent Events (SSE) for real-time streaming
+- Users see responses appear word-by-word instead of waiting
+- Better user experience with immediate feedback
+- Backend uses async generators for efficient streaming
+
+## Design Enhancements (Dec 29, 2025)
+
+### Scroll Animations
+- Intersection Observer for reveal-on-scroll effects
+- Elements fade in and slide up as user scrolls
+- Smooth transitions with staggered delays
+- Creates dynamic, engaging experience
+
+### Service Cards with Images
+- Added professional studio photography to all 6 service cards
+- Images with overlay gradients for text readability
+- 3D transform effects on hover
+- Detailed descriptions and feature lists
+- Makes services tangible and credible
+
+### Futuristic Effects
+- Parallax mouse movement on hero background
+- Glowing particles with teal/orange colors
+- Animated gradient borders
+- Glassmorphism with backdrop filters
+- Smooth hover transitions throughout
+- Rotating background gradients
+
 ## What's Been Implemented (Dec 29, 2025)
 
 ### ✅ Full-Stack Implementation

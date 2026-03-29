@@ -3,53 +3,52 @@ import './ServicesSection.css';
 const ServicesSection = () => {
   const services = [
     {
-      icon: '🎵',
       title: 'Custom Music Production',
-      description: 'Original compositions tailored for your vlogs, videos, and creative projects. From concept to completion.',
-      features: ['Original Compositions', 'Any Genre', 'Full Rights Included']
+      description: 'Original compositions from scratch. Your vision, our sound. Whether it\'s a YouTube intro, podcast theme, or full track - we craft music that slaps.',
+      image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae',
+      features: ['Original Beats', 'Any Genre/Vibe', 'Commercial Rights', 'Unlimited Revisions']
     },
     {
-      icon: '🎚️',
       title: 'Mixing & Mastering',
-      description: 'Professional audio engineering to make your tracks sound polished, balanced, and radio-ready.',
-      features: ['Studio Quality', 'Fast Turnaround', 'Unlimited Revisions']
+      description: 'Turn your raw recordings into radio-ready bangers. Pro mixing, mastering, and polish that makes your track stand out on any platform.',
+      image: 'https://images.unsplash.com/photo-1535406208535-1429839cfd13',
+      features: ['Studio Quality', '24-48hr Turnaround', 'Streaming Optimized', 'Free Revisions']
     },
     {
-      icon: '💒',
       title: 'Event & Wedding Music',
-      description: 'Custom soundtracks and live mixing for your special moments. Make memories that sound as good as they feel.',
-      features: ['Live Performance', 'Custom Playlists', 'Special Requests']
+      description: 'Live mixing, custom playlists, and soundtracks for your special moments. From ceremony to reception - we set the vibe.',
+      image: 'https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg',
+      features: ['Live DJ Sets', 'Custom Playlists', 'Ceremony Music', 'Reception Bangers']
     },
     {
-      icon: '🎤',
       title: 'Artist Support',
-      description: 'Production, mixing, and guidance for independent artists. Bring your musical vision to life.',
-      features: ['Full Production', 'Creative Direction', 'Distribution Ready']
+      description: 'Full production support for independent artists. Beat making, recording guidance, mixing, mastering - the whole package.',
+      image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04',
+      features: ['Beat Production', 'Recording Advice', 'Mix & Master', 'Distribution Ready']
     },
     {
-      icon: '🔥',
       title: 'Trending Remixes',
-      description: 'High-energy remixes and mashups of trending songs. Perfect for content creators and parties.',
-      features: ['Latest Trends', 'Unique Edits', 'Copyright Cleared']
+      description: 'Viral-ready remixes and mashups of trending tracks. Perfect for content creators who need that TikTok/IG heat.',
+      image: 'https://images.unsplash.com/photo-1571266028243-d220c6a7edbf',
+      features: ['Latest Trends', 'Unique Edits', 'Copyright Cleared', 'Social Media Ready']
     },
     {
-      icon: '🎧',
       title: 'Sound Design',
-      description: 'Custom sound effects, transitions, and audio branding for podcasts, videos, and games.',
-      features: ['Custom SFX', 'Brand Identity', 'Audio Logos']
+      description: 'Custom sound effects, transitions, and audio branding. Make your content unforgettable with signature sounds.',
+      image: 'https://images.unsplash.com/photo-1627407660893-fe01f60d44c4',
+      features: ['Custom SFX', 'Audio Logos', 'Transitions', 'Brand Identity']
     }
   ];
 
   return (
     <section id="services" className="services-section">
       <div className="section-container">
-        <div className="section-header">
+        <div className="section-header scroll-reveal">
           <h2 className="section-title">
-            <span className="title-accent">What We</span> Offer
+            <span className="title-accent">What We</span> Create
           </h2>
           <p className="section-description">
-            Comprehensive music production services tailored to your unique needs. 
-            No fixed packages - every project is custom-priced based on your vision.
+            From beats that bang to mixes that slap - we do it all. No cookie-cutter packages, just custom fire tailored to your exact vibe.
           </p>
         </div>
 
@@ -57,32 +56,38 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="service-card glass-card"
+              className="service-card glass-card scroll-reveal"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="service-icon">{service.icon}</div>
-              <h3 className="service-title">{service.title}</h3>
-              <p className="service-description">{service.description}</p>
+              <div className="service-image">
+                <img src={service.image} alt={service.title} />
+                <div className="service-overlay"></div>
+              </div>
               
-              <ul className="service-features">
-                {service.features.map((feature, idx) => (
-                  <li key={idx}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <div className="service-content">
+                <h3 className="service-title">{service.title}</h3>
+                <p className="service-description">{service.description}</p>
+                
+                <ul className="service-features">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="pricing-note glass-card">
-          <h3>Personalized Pricing</h3>
+        <div className="pricing-note glass-card scroll-reveal">
+          <h3>Real Talk About Pricing</h3>
           <p>
-            Every project is unique. We don't believe in one-size-fits-all packages. 
-            Chat with us to discuss your needs and get a custom quote tailored to your vision and budget.
+            Every project hits different. We don't do fixed packages because your music deserves better than that. 
+            Let's chat about what you need, and we'll cook up a quote that makes sense for your vision and budget.
           </p>
         </div>
       </div>

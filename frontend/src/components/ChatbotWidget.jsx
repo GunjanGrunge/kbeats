@@ -25,7 +25,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
       setMessages([
         {
           role: 'assistant',
-          content: "Hey there! 👋 Welcome to K Beats! I'm here to help you create amazing music. Whether it's for a vlog, wedding, event, or your next hit - let's chat about your project! What brings you here today?",
+          content: "Yo! What's good? 🎵 Need some heat for your project? Whether it's a vlog, wedding, event, or just trying to drop some fire - I gotchu. What are we cooking up today?",
           timestamp: new Date()
         }
       ]);
@@ -43,30 +43,76 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const userInput = inputValue;
     setInputValue('');
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${API}/chat/message`, {
-        session_id: sessionId,
-        message: inputValue
+      const response = await fetch(`${API}/chat/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          message: userInput
+        })
       });
 
-      const assistantMessage = {
-        role: 'assistant',
-        content: response.data.response,
-        timestamp: new Date(response.data.timestamp)
-      };
+      if (!response.ok) throw new Error('Stream failed');
 
-      setMessages(prev => [...prev, assistantMessage]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      
+      // Create streaming message
+      const streamingMsgId = Date.now();
+      setMessages(prev => [...prev, {
+        id: streamingMsgId,
+        role: 'assistant',
+        content: '',
+        timestamp: new Date(),
+        isStreaming: true
+      }]);
+
+      let buffer = '';
+      let fullContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(6));
+            if (data.chunk) {
+              fullContent += data.chunk;
+              setMessages(prev => prev.map(msg => 
+                msg.id === streamingMsgId 
+                  ? { ...msg, content: fullContent }
+                  : msg
+              ));
+            }
+            if (data.done) {
+              setMessages(prev => prev.map(msg => 
+                msg.id === streamingMsgId 
+                  ? { ...msg, isStreaming: false }
+                  : msg
+              ));
+            }
+          }
+        }
+      }
     } catch (error) {
       console.error('Error sending message:', error);
-      const errorMessage = {
+      setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "I apologize, but I'm having trouble connecting right now. Please try again or reach out to us directly through our social media channels.",
+        content: "Yo, my bad - connection's being weird. Try again or hit up our socials!",
         timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      }]);
     } finally {
       setIsLoading(false);
     }

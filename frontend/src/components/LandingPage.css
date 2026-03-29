@@ -1,8 +1,8 @@
-/* Global Landing Page Styles */
+/* Global Landing Page Styles - Teal/Orange Theme */
 .landing-page {
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #210635 0%, #420D4B 50%, #210635 100%);
+  background: linear-gradient(135deg, #0a1f2a 0%, #34596A 50%, #0a1f2a 100%);
   min-height: 100vh;
 }
 
@@ -14,11 +14,11 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7B337E 0%, #6667AB 100%);
+  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
   border: none;
   color: white;
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(123, 51, 126, 0.4);
+  box-shadow: 0 8px 32px rgba(217, 127, 48, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,27 +28,49 @@
 }
 
 .floating-chat-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 40px rgba(123, 51, 126, 0.6);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 40px rgba(217, 127, 48, 0.6);
 }
 
 @keyframes pulse {
   0%, 100% {
-    box-shadow: 0 8px 32px rgba(123, 51, 126, 0.4);
+    box-shadow: 0 8px 32px rgba(217, 127, 48, 0.4);
   }
   50% {
-    box-shadow: 0 8px 32px rgba(123, 51, 126, 0.8), 0 0 0 20px rgba(123, 51, 126, 0);
+    box-shadow: 0 8px 32px rgba(217, 127, 48, 0.8), 0 0 0 20px rgba(217, 127, 48, 0);
   }
 }
 
 /* Glass Card Effect */
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(52, 89, 106, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(128, 180, 191, 0.2);
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Scroll Animation Classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-fade {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.scroll-fade.revealed {
+  opacity: 1;
 }
 
 /* Section Container */
@@ -68,12 +90,12 @@
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   margin-bottom: 1rem;
-  color: #E5D5E0;
+  color: #B5D2D9;
   letter-spacing: -0.02em;
 }
 
 .title-accent {
-  background: linear-gradient(135deg, #E5D5E0 0%, #6667AB 100%);
+  background: linear-gradient(135deg, #80B4BF 0%, #D97F30 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -81,7 +103,7 @@
 
 .section-description {
   font-size: 1.25rem;
-  color: rgba(229, 213, 224, 0.8);
+  color: rgba(181, 210, 217, 0.9);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -100,29 +122,49 @@
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.cta-button:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .cta-button.primary {
-  background: linear-gradient(135deg, #7B337E 0%, #6667AB 100%);
+  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
   color: white;
-  box-shadow: 0 4px 20px rgba(123, 51, 126, 0.4);
+  box-shadow: 0 4px 20px rgba(217, 127, 48, 0.4);
 }
 
 .cta-button.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(123, 51, 126, 0.6);
+  box-shadow: 0 8px 30px rgba(217, 127, 48, 0.6);
 }
 
 .cta-button.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: #E5D5E0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(128, 180, 191, 0.2);
+  color: #B5D2D9;
+  border: 1px solid rgba(128, 180, 191, 0.3);
   backdrop-filter: blur(10px);
 }
 
 .cta-button.secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(128, 180, 191, 0.3);
+  border-color: rgba(128, 180, 191, 0.5);
   transform: translateY(-2px);
 }
 
