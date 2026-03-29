@@ -48,39 +48,99 @@ const ServicesSection = ({ onOpenChat }) => {
     }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 80, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
   return (
     <section id="services" className="services-section" data-testid="services-section">
       <div className="section-container">
         {/* Section Header */}
         <motion.div
           className="services-header"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          variants={headerVariants}
         >
-          <span className="section-label">What We Do</span>
-          <h2 className="section-title">
+          <motion.span 
+            className="section-label"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            What We Do
+          </motion.span>
+          <motion.h2 
+            className="section-title"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
             Services <span className="title-outline">& Offerings</span>
-          </h2>
-          <p className="section-description">
+          </motion.h2>
+          <motion.p 
+            className="section-description"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             From beats that bang to mixes that slap — we deliver sound that makes an impact.
             Every project is custom-quoted based on your specific needs.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="services-grid">
+        <motion.div 
+          className="services-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={containerVariants}
+        >
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.div
                 key={index}
                 className="service-card"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                variants={cardVariants}
                 data-testid="service-card"
               >
                 <div className="service-image">
@@ -102,21 +162,33 @@ const ServicesSection = ({ onOpenChat }) => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* CTA Section */}
         <motion.div
           className="services-cta"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="cta-content">
+          <motion.div 
+            className="cta-content"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
             <h3>Ready to Start Your Project?</h3>
             <p>Every project is unique — reach out and let's discuss your vision. We'll create something amazing together.</p>
-          </div>
-          <div className="cta-buttons">
+          </motion.div>
+          <motion.div 
+            className="cta-buttons"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+          >
             <button 
               className="cta-btn-primary"
               onClick={onOpenChat}
@@ -133,7 +205,7 @@ const ServicesSection = ({ onOpenChat }) => {
               <Mail size={20} />
               <span>artists@kebeatsofficial.com</span>
             </a>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

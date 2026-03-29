@@ -24,25 +24,69 @@ const SocialSection = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 60, x: -30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
   return (
     <section id="social" className="social-section" data-testid="social-section">
       <div className="section-container">
         {/* Header */}
         <motion.div
           className="social-header"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="section-label">Connect</span>
-          <h2 className="section-title">
+          <motion.span 
+            className="section-label"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Connect
+          </motion.span>
+          <motion.h2 
+            className="section-title"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
             Follow <span className="title-outline">The Sound</span>
-          </h2>
+          </motion.h2>
         </motion.div>
 
         {/* Social Links */}
-        <div className="social-links">
+        <motion.div 
+          className="social-links"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={containerVariants}
+        >
           {socials.map((social, index) => (
             <motion.a
               key={social.name}
@@ -50,10 +94,11 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="social-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              variants={cardVariants}
+              whileHover={{ 
+                x: 10,
+                transition: { duration: 0.3 }
+              }}
               data-testid="social-link"
             >
               <div className="social-card-content">
@@ -66,7 +111,7 @@ const SocialSection = () => {
               </div>
             </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
