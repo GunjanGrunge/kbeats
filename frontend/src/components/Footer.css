@@ -1,13 +1,13 @@
-/* Footer - Teal/Orange Theme */
+/* Footer - Minimal Dark */
 .footer {
   position: relative;
-  background: linear-gradient(180deg, rgba(10, 31, 42, 0.8) 0%, rgba(10, 31, 42, 1) 100%);
-  border-top: 1px solid rgba(128, 180, 191, 0.2);
+  background: #0a0a0a;
+  border-top: 1px solid rgba(128, 180, 191, 0.1);
   padding: 4rem 2rem 2rem;
 }
 
 .footer-content {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -33,12 +33,12 @@
 .footer-description {
   font-size: 1rem;
   line-height: 1.6;
-  color: rgba(181, 210, 217, 0.7);
+  color: rgba(181, 210, 217, 0.6);
   margin-bottom: 1.5rem;
 }
 
 .footer-title {
-  background: linear-gradient(135deg, #80B4BF 0%, #F2A444 100%);
+  background: linear-gradient(135deg, #F2A444 0%, #D97F30 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -54,12 +54,12 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(52, 89, 106, 0.3);
+  background: rgba(20, 20, 20, 0.6);
   border: 1px solid rgba(128, 180, 191, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(181, 210, 217, 0.8);
+  color: rgba(181, 210, 217, 0.7);
   transition: all 0.3s ease;
 }
 
@@ -81,11 +81,11 @@
 .footer-section ul li {
   margin-bottom: 0.75rem;
   font-size: 0.95rem;
-  color: rgba(181, 210, 217, 0.7);
+  color: rgba(181, 210, 217, 0.6);
 }
 
 .footer-section ul li a {
-  color: rgba(181, 210, 217, 0.7);
+  color: rgba(181, 210, 217, 0.6);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -97,21 +97,21 @@
 .footer-section p {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: rgba(181, 210, 217, 0.7);
+  color: rgba(181, 210, 217, 0.6);
   margin-bottom: 0.75rem;
 }
 
 .contact-cta {
   font-weight: 600;
-  color: rgba(181, 210, 217, 0.9) !important;
+  color: rgba(181, 210, 217, 0.8) !important;
 }
 
 /* Footer Bottom */
 .footer-bottom {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid rgba(128, 180, 191, 0.2);
-  color: rgba(181, 210, 217, 0.6);
+  border-top: 1px solid rgba(128, 180, 191, 0.1);
+  color: rgba(181, 210, 217, 0.5);
   font-size: 0.9rem;
 }
 

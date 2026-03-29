@@ -1,4 +1,4 @@
-/* Header Styles - Teal/Orange Theme */
+/* Header - Minimal Bold Design */
 .header {
   position: fixed;
   top: 0;
@@ -7,24 +7,26 @@
   z-index: 1000;
   transition: all 0.3s ease;
   padding: 1.5rem 0;
+  pointer-events: none;
 }
 
 .header.scrolled {
-  background: rgba(10, 31, 42, 0.95);
+  background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(128, 180, 191, 0.2);
+  border-bottom: 1px solid rgba(128, 180, 191, 0.1);
   padding: 1rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .header-content {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  pointer-events: auto;
 }
 
 /* Logo */
@@ -35,8 +37,8 @@
 .logo-text {
   font-size: 1.75rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
-  background: linear-gradient(135deg, #80B4BF 0%, #F2A444 100%);
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #F2A444 0%, #D97F30 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -53,7 +55,7 @@
 .nav-link {
   background: none;
   border: none;
-  color: rgba(181, 210, 217, 0.9);
+  color: rgba(181, 210, 217, 0.8);
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -65,7 +67,7 @@
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -5px;
   left: 0;
   width: 0;
   height: 2px;
@@ -79,6 +81,45 @@
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.auth-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-login {
+  background: transparent;
+  border: 1px solid rgba(128, 180, 191, 0.3);
+  color: #B5D2D9;
+}
+
+.btn-login:hover {
+  background: rgba(128, 180, 191, 0.1);
+  border-color: rgba(128, 180, 191, 0.5);
+}
+
+.btn-signup {
+  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(217, 127, 48, 0.3);
+}
+
+.btn-signup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(217, 127, 48, 0.5);
 }
 
 /* Mobile Menu Toggle */
@@ -112,7 +153,7 @@
     right: -100%;
     width: 70%;
     height: 100vh;
-    background: rgba(10, 31, 42, 0.98);
+    background: rgba(10, 10, 10, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
     justify-content: center;
@@ -128,5 +169,15 @@
 
   .nav-link {
     font-size: 1.25rem;
+  }
+  
+  .auth-buttons {
+    flex-direction: column;
+    width: 80%;
+  }
+  
+  .auth-btn {
+    width: 100%;
+    text-align: center;
   }
 }

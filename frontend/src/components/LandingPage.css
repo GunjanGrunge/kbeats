@@ -1,8 +1,8 @@
-/* Global Landing Page Styles - Teal/Orange Theme */
+/* Global Landing Page - Bold Black Theme */
 .landing-page {
   position: relative;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #0a1f2a 0%, #34596A 50%, #0a1f2a 100%);
+  background: #0a0a0a;
   min-height: 100vh;
 }
 
@@ -18,37 +18,27 @@
   border: none;
   color: white;
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(217, 127, 48, 0.4);
+  box-shadow: 0 8px 32px rgba(217, 127, 48, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: pulse 2s infinite;
 }
 
 .floating-chat-button:hover {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 40px rgba(217, 127, 48, 0.6);
+  box-shadow: 0 12px 40px rgba(217, 127, 48, 0.7);
 }
 
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 8px 32px rgba(217, 127, 48, 0.4);
-  }
-  50% {
-    box-shadow: 0 8px 32px rgba(217, 127, 48, 0.8), 0 0 0 20px rgba(217, 127, 48, 0);
-  }
-}
-
-/* Glass Card Effect */
+/* Glass Card Effect - Updated */
 .glass-card {
-  background: rgba(52, 89, 106, 0.15);
+  background: rgba(20, 20, 20, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(128, 180, 191, 0.2);
+  border: 1px solid rgba(128, 180, 191, 0.15);
   border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
 
@@ -75,7 +65,7 @@
 
 /* Section Container */
 .section-container {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 80px 2rem;
 }
@@ -95,7 +85,7 @@
 }
 
 .title-accent {
-  background: linear-gradient(135deg, #80B4BF 0%, #D97F30 100%);
+  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -103,7 +93,7 @@
 
 .section-description {
   font-size: 1.25rem;
-  color: rgba(181, 210, 217, 0.9);
+  color: rgba(181, 210, 217, 0.8);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -156,14 +146,14 @@
 }
 
 .cta-button.secondary {
-  background: rgba(128, 180, 191, 0.2);
+  background: rgba(128, 180, 191, 0.1);
   color: #B5D2D9;
   border: 1px solid rgba(128, 180, 191, 0.3);
   backdrop-filter: blur(10px);
 }
 
 .cta-button.secondary:hover {
-  background: rgba(128, 180, 191, 0.3);
+  background: rgba(128, 180, 191, 0.2);
   border-color: rgba(128, 180, 191, 0.5);
   transform: translateY(-2px);
 }

@@ -3,92 +3,89 @@ import './ServicesSection.css';
 const ServicesSection = () => {
   const services = [
     {
-      title: 'Custom Music Production',
-      description: 'Original compositions from scratch. Your vision, our sound. Whether it\'s a YouTube intro, podcast theme, or full track - we craft music that slaps.',
+      title: 'Opportunity to create your own unique profile',
+      description: 'Build your brand and showcase your music to the world.',
       image: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae',
-      features: ['Original Beats', 'Any Genre/Vibe', 'Commercial Rights', 'Unlimited Revisions']
+      cta: 'Explore'
     },
     {
-      title: 'Mixing & Mastering',
-      description: 'Turn your raw recordings into radio-ready bangers. Pro mixing, mastering, and polish that makes your track stand out on any platform.',
-      image: 'https://images.unsplash.com/photo-1535406208535-1429839cfd13',
-      features: ['Studio Quality', '24-48hr Turnaround', 'Streaming Optimized', 'Free Revisions']
-    },
-    {
-      title: 'Event & Wedding Music',
-      description: 'Live mixing, custom playlists, and soundtracks for your special moments. From ceremony to reception - we set the vibe.',
-      image: 'https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg',
-      features: ['Live DJ Sets', 'Custom Playlists', 'Ceremony Music', 'Reception Bangers']
-    },
-    {
-      title: 'Artist Support',
-      description: 'Full production support for independent artists. Beat making, recording guidance, mixing, mastering - the whole package.',
-      image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04',
-      features: ['Beat Production', 'Recording Advice', 'Mix & Master', 'Distribution Ready']
-    },
-    {
-      title: 'Trending Remixes',
-      description: 'Viral-ready remixes and mashups of trending tracks. Perfect for content creators who need that TikTok/IG heat.',
+      title: 'Support and feedback from the music community',
+      description: 'Connect with artists, producers, and fans who get it.',
       image: 'https://images.unsplash.com/photo-1571266028243-d220c6a7edbf',
-      features: ['Latest Trends', 'Unique Edits', 'Copyright Cleared', 'Social Media Ready']
+      cta: 'Connect'
     },
     {
-      title: 'Sound Design',
-      description: 'Custom sound effects, transitions, and audio branding. Make your content unforgettable with signature sounds.',
-      image: 'https://images.unsplash.com/photo-1627407660893-fe01f60d44c4',
-      features: ['Custom SFX', 'Audio Logos', 'Transitions', 'Brand Identity']
+      title: 'Guaranteed payouts for every track played',
+      description: 'Your music, your money. Fair compensation every time.',
+      image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04',
+      cta: 'Explore'
     }
   ];
 
   return (
-    <section id="services" className="services-section">
+    <section id="services" className="services-section-new">
       <div className="section-container">
-        <div className="section-header scroll-reveal">
-          <h2 className="section-title">
-            <span className="title-accent">What We</span> Create
+        <div className="services-header scroll-reveal">
+          <h2 className="services-title-new">
+            What We <span className="highlight">Create</span>
           </h2>
-          <p className="section-description">
-            From beats that bang to mixes that slap - we do it all. No cookie-cutter packages, just custom fire tailored to your exact vibe.
+          <p className="services-subtitle">
+            From beats that bang to mixes that slap - custom fire for every vibe
           </p>
         </div>
 
-        <div className="services-grid">
+        <div className="services-cards-grid">
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="service-card glass-card scroll-reveal"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="service-card-new scroll-reveal"
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <div className="service-image">
+              <div className="card-image-wrapper">
                 <img src={service.image} alt={service.title} />
-                <div className="service-overlay"></div>
+                <div className="card-gradient-overlay"></div>
               </div>
               
-              <div className="service-content">
-                <h3 className="service-title">{service.title}</h3>
-                <p className="service-description">{service.description}</p>
-                
-                <ul className="service-features">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+              <div className="card-content-new">
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <button className="card-cta">
+                  {service.cta}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                  </svg>
+                </button>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="pricing-note glass-card scroll-reveal">
-          <h3>Real Talk About Pricing</h3>
-          <p>
-            Every project hits different. We don't do fixed packages because your music deserves better than that. 
-            Let's chat about what you need, and we'll cook up a quote that makes sense for your vision and budget.
-          </p>
+        {/* Additional Services Grid */}
+        <div className="additional-services">
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">🎵</div>
+            <span>Custom Beats</span>
+          </div>
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">🎚️</div>
+            <span>Mix & Master</span>
+          </div>
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">💒</div>
+            <span>Event Music</span>
+          </div>
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">🎤</div>
+            <span>Artist Support</span>
+          </div>
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">🔥</div>
+            <span>Trending Remixes</span>
+          </div>
+          <div className="service-pill scroll-reveal">
+            <div className="pill-icon">🎧</div>
+            <span>Sound Design</span>
+          </div>
         </div>
       </div>
     </section>
