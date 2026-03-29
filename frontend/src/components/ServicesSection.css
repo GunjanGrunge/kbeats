@@ -1,0 +1,127 @@
+/* Services Section */
+.services-section {
+  position: relative;
+  background: linear-gradient(180deg, rgba(33, 6, 53, 0.5) 0%, rgba(66, 13, 75, 0.3) 100%);
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Service Card */
+.service-card {
+  padding: 2.5rem;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7B337E 0%, #6667AB 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(123, 51, 126, 0.3);
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Service Icon */
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Service Title */
+.service-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E5D5E0;
+  margin-bottom: 1rem;
+}
+
+/* Service Description */
+.service-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(229, 213, 224, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+/* Service Features */
+.service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.service-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: rgba(229, 213, 224, 0.7);
+}
+
+.service-features svg {
+  color: #6667AB;
+  flex-shrink: 0;
+}
+
+/* Pricing Note */
+.pricing-note {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.pricing-note h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #E5D5E0;
+  margin-bottom: 1rem;
+}
+
+.pricing-note p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(229, 213, 224, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    padding: 2rem;
+  }
+}

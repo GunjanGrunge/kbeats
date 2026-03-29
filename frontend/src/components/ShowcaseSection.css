@@ -1,0 +1,135 @@
+/* Showcase Section */
+.showcase-section {
+  position: relative;
+  background: rgba(33, 6, 53, 0.3);
+}
+
+/* Tabs */
+.showcase-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(229, 213, 224, 0.7);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #E5D5E0;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tab-button.active {
+  background: linear-gradient(135deg, #7B337E 0%, #6667AB 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(123, 51, 126, 0.4);
+}
+
+.tab-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Content */
+.showcase-content {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Video Wrapper */
+.video-wrapper,
+.embed-wrapper {
+  position: relative;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.video-wrapper iframe,
+.embed-wrapper iframe {
+  width: 100%;
+  min-height: 500px;
+  border-radius: 16px;
+}
+
+/* Instagram */
+.instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.instagram-placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.instagram-placeholder svg {
+  color: #6667AB;
+  opacity: 0.6;
+}
+
+.instagram-placeholder p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(229, 213, 224, 0.8);
+  max-width: 400px;
+}
+
+/* Platform Link */
+.platform-link {
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .showcase-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab-button {
+    justify-content: center;
+  }
+
+  .video-wrapper iframe,
+  .embed-wrapper iframe {
+    min-height: 300px;
+  }
+
+  .instagram-grid {
+    grid-template-columns: 1fr;
+  }
+}
