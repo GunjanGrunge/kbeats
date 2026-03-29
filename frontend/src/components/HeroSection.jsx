@@ -1,94 +1,152 @@
-import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Play } from 'lucide-react';
 import './HeroSection.css';
-import { Music2 } from 'lucide-react';
 
 const HeroSection = ({ onOpenChat }) => {
-  const canvasRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
-    <section id="home" className="hero-section-new">
-      <div className="hero-background-new">
-        <div className="gradient-orb orb-1"></div>
-        <div className="gradient-orb orb-2"></div>
-        <div className="gradient-orb orb-3"></div>
+    <section id="hero" className="hero-section" data-testid="hero-section">
+      {/* Background */}
+      <div className="hero-bg">
+        <div className="hero-bg-gradient"></div>
+        <img 
+          src="https://images.unsplash.com/photo-1759735541630-036eefb7cd3a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwyfHxuZW9uJTIwYWJzdHJhY3QlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NzQ4MDk3MDF8MA&ixlib=rb-4.1.0&q=85"
+          alt="Abstract neon background"
+          className="hero-bg-image"
+        />
       </div>
 
-      <div className="hero-container">
-        {/* Large Geometric Text */}
-        <div className="hero-text-massive">
-          <div className="text-outline">BEATS</div>
-        </div>
+      <div className="hero-content">
+        {/* Main Title */}
+        <motion.div
+          className="hero-title-wrapper"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h1 className="hero-title">
+            <span className="hero-title-k">K</span>
+            <span className="hero-title-beats">BEATS</span>
+          </h1>
+        </motion.div>
 
-        {/* Circular Elements */}
-        <div className="circle-element circle-1">
-          <div className="circle-content">
-            <Music2 size={60} />
-            <p>Custom production for creators who need that edge</p>
-          </div>
-        </div>
+        {/* Subtitle */}
+        <motion.p
+          className="hero-subtitle"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Music Production & Mixing
+        </motion.p>
 
-        <div className="circle-element circle-2" 
-          style={{
-            transform: `translate(${mousePos.x * 0.02}px, ${mousePos.y * 0.02}px)`
-          }}>
-          <img 
-            src="https://images.unsplash.com/photo-1571266028243-d220c6a7edbf"
-            alt="DJ Setup"
-          />
-          <div className="circle-overlay">
-            <h3>K Beats</h3>
-          </div>
-        </div>
+        {/* Description */}
+        <motion.p
+          className="hero-description"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          Crafting beats that hit different. Custom music for creators, artists, 
+          events & beyond. Where sound meets vision.
+        </motion.p>
 
-        <div className="circle-element circle-3">
-          <img 
-            src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04"
-            alt="Music Studio"
-          />
-        </div>
-
-        {/* Main CTA */}
-        <div className="hero-cta-box">
-          <h1>K Beats</h1>
-          <p>Where sound meets vision. Custom beats, remixes & production that actually slap.</p>
-          <button className="cta-learn-more" onClick={onOpenChat}>
-            Start Your Project
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+        {/* CTAs */}
+        <motion.div
+          className="hero-ctas"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <button 
+            className="hero-btn-primary"
+            onClick={onOpenChat}
+            data-testid="hero-cta-primary"
+          >
+            <span>Start Your Project</span>
+            <ArrowRight size={18} />
           </button>
-        </div>
+          <a 
+            href="https://www.youtube.com/@Kbeats_official" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hero-btn-secondary"
+            data-testid="hero-cta-secondary"
+          >
+            <Play size={18} />
+            <span>Watch Our Work</span>
+          </a>
+        </motion.div>
 
-        {/* Navigation Pills */}
-        <nav className="hero-nav-pills">
-          <button onClick={() => document.getElementById('home').scrollIntoView()}>Home</button>
-          <button className="active" onClick={() => document.getElementById('services').scrollIntoView()}>Services</button>
-          <button onClick={() => document.getElementById('showcase').scrollIntoView()}>Tracks</button>
-          <button onClick={() => document.getElementById('footer').scrollIntoView()}>Contact</button>
-        </nav>
-
-        {/* Side Icons */}
-        <div className="side-icons">
-          <a href="https://www.youtube.com/@Kbeats_official" target="_blank" rel="noopener noreferrer">
-            <div className="icon-circle">Y</div>
-          </a>
-          <a href="https://www.instagram.com/kbeatsofficial/" target="_blank" rel="noopener noreferrer">
-            <div className="icon-circle">I</div>
-          </a>
-          <a href="https://soundcloud.com/k-beats-291187445" target="_blank" rel="noopener noreferrer">
-            <div className="icon-circle">S</div>
-          </a>
-        </div>
+        {/* Stats */}
+        <motion.div
+          className="hero-stats"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="stat-item">
+            <span className="stat-number">500+</span>
+            <span className="stat-label">Projects Delivered</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item">
+            <span className="stat-number">3</span>
+            <span className="stat-label">Platforms</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-item">
+            <span className="stat-number">24/7</span>
+            <span className="stat-label">Support</span>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+      >
+        <span>Scroll</span>
+        <div className="scroll-line"></div>
+      </motion.div>
+
+      {/* Side Social Links */}
+      <motion.div 
+        className="hero-social-side"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+      >
+        <a 
+          href="https://www.youtube.com/@Kbeats_official" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="social-link-side"
+          data-testid="social-link-youtube"
+        >
+          YT
+        </a>
+        <a 
+          href="https://www.instagram.com/kbeatsofficial/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="social-link-side"
+          data-testid="social-link-instagram"
+        >
+          IG
+        </a>
+        <a 
+          href="https://soundcloud.com/k-beats-291187445" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="social-link-side"
+          data-testid="social-link-soundcloud"
+        >
+          SC
+        </a>
+      </motion.div>
     </section>
   );
 };

@@ -17,7 +17,7 @@ db = client[os.environ.get('DB_NAME', 'myapp')]
 
 @router.post("/message")
 async def send_message(chat_input: ChatMessageCreate):
-    """Send a message to the chatbot and get streaming response"""
+    """Send a message to the chatbot and get response"""
     try:
         # Save user message
         user_message = ChatMessage(
@@ -52,35 +52,35 @@ async def send_message(chat_input: ChatMessageCreate):
                 }
             )
         
-        # Stream response
-        async def generate_stream():
-            full_response = ""
-            async for chunk in get_chat_response(chat_input.session_id, chat_input.message):
-                full_response += chunk
-                yield f"data: {json.dumps({'chunk': chunk})}\n\n"
-            
-            # Save complete assistant message
-            assistant_message = ChatMessage(
-                session_id=chat_input.session_id,
-                role="assistant",
-                content=full_response
-            )
-            await db.chat_messages.insert_one(assistant_message.dict())
-            
-            # Update inquiry with assistant response
-            await db.inquiries.update_one(
-                {"session_id": chat_input.session_id},
-                {
-                    "$push": {
-                        "conversation_history": {
-                            "role": "assistant",
-                            "content": full_response,
-                            "timestamp": datetime.utcnow().isoformat()
-                        }
+        # Get response from chatbot (non-streaming)
+        response = await get_chat_response(chat_input.session_id, chat_input.message)
+        
+        # Save assistant message
+        assistant_message = ChatMessage(
+            session_id=chat_input.session_id,
+            role="assistant",
+            content=response
+        )
+        await db.chat_messages.insert_one(assistant_message.dict())
+        
+        # Update inquiry with assistant response
+        await db.inquiries.update_one(
+            {"session_id": chat_input.session_id},
+            {
+                "$push": {
+                    "conversation_history": {
+                        "role": "assistant",
+                        "content": response,
+                        "timestamp": datetime.utcnow().isoformat()
                     }
                 }
-            )
-            
+            }
+        )
+        
+        # Send response as SSE for frontend compatibility (simulated streaming)
+        async def generate_stream():
+            # Send the full response as one chunk
+            yield f"data: {json.dumps({'chunk': response})}\n\n"
             yield f"data: {json.dumps({'done': True})}\n\n"
         
         return StreamingResponse(

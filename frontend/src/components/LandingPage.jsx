@@ -1,47 +1,46 @@
-import { useState, useEffect } from 'react';
-import './LandingPage.css';
+import { useEffect, useState } from 'react';
+import Lenis from '@studio-freight/lenis';
+import Navbar from './Navbar';
 import HeroSection from './HeroSection';
+import MarqueeSection from './MarqueeSection';
 import ServicesSection from './ServicesSection';
-import ShowcaseSection from './ShowcaseSection';
+import AboutSection from './AboutSection';
+import SocialSection from './SocialSection';
+import FooterSection from './FooterSection';
 import ChatbotWidget from './ChatbotWidget';
-import Footer from './Footer';
-import Header from './Header';
+import './LandingPage.css';
 
 const LandingPage = () => {
   const [showChatbot, setShowChatbot] = useState(false);
 
   useEffect(() => {
-    // Smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
-    // Scroll reveal animation
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-        }
-      });
-    }, observerOptions);
-
-    // Observe all elements with scroll-reveal class
-    const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-fade');
-    revealElements.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="landing-page">
-      <Header />
+    <div className="landing-page" data-testid="landing-page">
+      <Navbar onOpenChat={() => setShowChatbot(true)} />
       <HeroSection onOpenChat={() => setShowChatbot(true)} />
+      <MarqueeSection />
       <ServicesSection />
-      <ShowcaseSection />
-      <Footer />
+      <AboutSection />
+      <SocialSection />
+      <FooterSection />
       
       <ChatbotWidget 
         isOpen={showChatbot} 
@@ -51,9 +50,10 @@ const LandingPage = () => {
       {/* Floating chat button */}
       {!showChatbot && (
         <button 
-          className="floating-chat-button"
+          className="floating-chat-btn"
           onClick={() => setShowChatbot(true)}
           aria-label="Open chat"
+          data-testid="chatbot-trigger"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>

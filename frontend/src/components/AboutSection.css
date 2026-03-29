@@ -1,0 +1,142 @@
+.about-section {
+  padding: 120px 0;
+  background: #050505;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+}
+
+/* Image */
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.about-image-border {
+  position: absolute;
+  inset: 20px;
+  border: 1px solid #ccff00;
+  pointer-events: none;
+}
+
+.about-tag {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: #ccff00;
+  color: #050505;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@media (min-width: 1024px) {
+  .about-tag {
+    bottom: 40px;
+    right: -40px;
+  }
+}
+
+.tag-year {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.tag-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Content */
+.about-content {
+  padding: 20px 0;
+}
+
+.about-title {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 32px;
+  line-height: 1.2;
+}
+
+.about-title .highlight {
+  color: #ccff00;
+}
+
+.about-text {
+  margin-bottom: 32px;
+}
+
+.about-text p {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #888888;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Signature */
+.about-signature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.signature-line {
+  width: 60px;
+  height: 1px;
+  background: #ccff00;
+}
+
+.signature-text {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Quote */
+.about-quote {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #ffffff;
+  padding-left: 24px;
+  border-left: 2px solid #ccff00;
+  line-height: 1.6;
+}

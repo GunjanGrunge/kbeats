@@ -1,0 +1,65 @@
+.marquee-section {
+  padding: 60px 0;
+  background: #050505;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.marquee-track {
+  padding: 20px 0;
+}
+
+.marquee-track-2 {
+  margin-top: -10px;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 40px;
+}
+
+.marquee-item span.solid {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.marquee-item span.outline {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+
+.marquee-dot {
+  color: #ccff00;
+  font-size: 1rem;
+}
+
+.marquee-item-small {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+.marquee-item-small span {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.marquee-dot-small {
+  color: #ccff00;
+  font-size: 0.5rem;
+}

@@ -1,173 +1,53 @@
-/* Global Landing Page - Bold Black Theme */
 .landing-page {
+  min-height: 100vh;
+  background-color: #050505;
   position: relative;
   overflow-x: hidden;
-  background: #0a0a0a;
-  min-height: 100vh;
 }
 
 /* Floating Chat Button */
-.floating-chat-button {
+.floating-chat-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
+  bottom: 32px;
+  right: 32px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
-  border: none;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 8px 32px rgba(217, 127, 48, 0.5);
+  background: #ccff00;
+  color: #050505;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: pulse-glow 2s infinite;
 }
 
-.floating-chat-button:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 40px rgba(217, 127, 48, 0.7);
+.floating-chat-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 50px rgba(204, 255, 0, 0.6);
 }
 
-/* Glass Card Effect - Updated */
-.glass-card {
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(128, 180, 191, 0.15);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-}
-
-/* Scroll Animation Classes */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.scroll-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-fade {
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-.scroll-fade.revealed {
-  opacity: 1;
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(204, 255, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(204, 255, 0, 0.6);
+  }
 }
 
 /* Section Container */
 .section-container {
-  max-width: 1600px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 80px 2rem;
+  padding: 0 24px;
 }
 
-/* Section Headers */
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.section-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: #B5D2D9;
-  letter-spacing: -0.02em;
-}
-
-.title-accent {
-  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-description {
-  font-size: 1.25rem;
-  color: rgba(181, 210, 217, 0.8);
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* CTA Buttons */
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.cta-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.cta-button.primary {
-  background: linear-gradient(135deg, #D97F30 0%, #F2A444 100%);
-  color: white;
-  box-shadow: 0 4px 20px rgba(217, 127, 48, 0.4);
-}
-
-.cta-button.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(217, 127, 48, 0.6);
-}
-
-.cta-button.secondary {
-  background: rgba(128, 180, 191, 0.1);
-  color: #B5D2D9;
-  border: 1px solid rgba(128, 180, 191, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.cta-button.secondary:hover {
-  background: rgba(128, 180, 191, 0.2);
-  border-color: rgba(128, 180, 191, 0.5);
-  transform: translateY(-2px);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .section-container {
-    padding: 60px 1.5rem;
-  }
-  
-  .floating-chat-button {
-    width: 50px;
-    height: 50px;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    padding: 0 48px;
   }
 }

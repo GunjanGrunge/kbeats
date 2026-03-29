@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Send, Loader2 } from 'lucide-react';
 import './ChatbotWidget.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -25,7 +26,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
       setMessages([
         {
           role: 'assistant',
-          content: "Yo! What's good? 🎵 Need some heat for your project? Whether it's a vlog, wedding, event, or just trying to drop some fire - I gotchu. What are we cooking up today?",
+          content: "Yo! What's good? Need some heat for your project? Whether it's a vlog, wedding, event, or just trying to drop some fire - I gotchu. What are we cooking up today?",
           timestamp: new Date()
         }
       ]);
@@ -64,7 +65,6 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       
-      // Create streaming message
       const streamingMsgId = Date.now();
       setMessages(prev => [...prev, {
         id: streamingMsgId,
@@ -125,82 +125,104 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="chatbot-overlay">
-      <div className="chatbot-widget glass-card">
-        <div className="chatbot-header">
-          <div className="chatbot-header-content">
-            <div className="chatbot-avatar">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-              </svg>
-            </div>
-            <div>
-              <h3>K Beats AI</h3>
-              <span className="status-indicator">● Online</span>
-            </div>
-          </div>
-          <button 
-            className="close-button"
-            onClick={onClose}
-            aria-label="Close chat"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="chatbot-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="chatbot-widget"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            data-testid="chatbot-window"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-
-        <div className="chatbot-messages">
-          {messages.map((message, index) => (
-            <div 
-              key={index} 
-              className={`message ${message.role}`}
-            >
-              <div className="message-content">
-                {message.content}
-              </div>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="message assistant">
-              <div className="message-content">
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+            {/* Header */}
+            <div className="chatbot-header">
+              <div className="chatbot-header-info">
+                <div className="chatbot-avatar">
+                  <span className="avatar-k">K</span>
+                </div>
+                <div>
+                  <h3>K Beats AI</h3>
+                  <span className="status">
+                    <span className="status-dot"></span>
+                    Online
+                  </span>
                 </div>
               </div>
+              <button 
+                className="close-btn"
+                onClick={onClose}
+                aria-label="Close chat"
+                data-testid="chatbot-close"
+              >
+                <X size={20} />
+              </button>
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
 
-        <div className="chatbot-input">
-          <input
-            type="text"
-            placeholder="Type your message..."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            disabled={isLoading}
-          />
-          <button 
-            onClick={handleSend}
-            disabled={!inputValue.trim() || isLoading}
-            aria-label="Send message"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
+            {/* Messages */}
+            <div className="chatbot-messages">
+              {messages.map((message, index) => (
+                <motion.div
+                  key={index}
+                  className={`message ${message.role}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="message-content">
+                    {message.content}
+                    {message.isStreaming && (
+                      <span className="typing-cursor">|</span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+              {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
+                <div className="message assistant">
+                  <div className="message-content">
+                    <div className="typing-indicator">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="chatbot-input">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                disabled={isLoading}
+                data-testid="chatbot-input"
+              />
+              <button 
+                onClick={handleSend}
+                disabled={!inputValue.trim() || isLoading}
+                aria-label="Send message"
+                data-testid="chatbot-send"
+              >
+                {isLoading ? <Loader2 size={18} className="spin" /> : <Send size={18} />}
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

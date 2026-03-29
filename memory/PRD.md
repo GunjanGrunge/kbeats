@@ -1,13 +1,13 @@
 # K Beats Landing Page - Product Requirements Document
 
 ## Original Problem Statement
-Build a futuristic landing page for K Beats music channel (Instagram, YouTube, SoundCloud) that:
+Build a premium, futuristic landing page for K Beats music channel (Instagram, YouTube, SoundCloud) that:
 - Showcases their music mixing and trending song remix services
 - Provides custom music services for vlogs, events, weddings, and special moments
 - Supports individual artists in mixing and music production
 - Includes a conversational AI chatbot to understand requirements and collect client info
-- Uses the Moon color palette (#E5D5E0, #6667AB, #7B337E, #420D4B, #210635)
-- Features futuristic design with glassmorphism effects and smooth animations like landonorris.com
+- Features premium design inspired by landonorris.com with smooth animations and CTAs
+- Has a polished K BEATS logo/branding
 
 ## User Personas
 1. **Content Creators** - Need custom music for vlogs and videos
@@ -19,15 +19,22 @@ Build a futuristic landing page for K Beats music channel (Instagram, YouTube, S
 
 ### Frontend (React)
 - **Components:**
-  - `LandingPage.jsx` - Main container
-  - `Header.jsx` - Fixed navigation with glassmorphism on scroll
-  - `HeroSection.jsx` - Hero with animated canvas particles, gradient text, CTAs
-  - `ServicesSection.jsx` - 6 service cards (Custom Production, Mixing, Events, Artist Support, Remixes, Sound Design)
-  - `ShowcaseSection.jsx` - Tabbed interface for YouTube, SoundCloud, Instagram
-  - `ChatbotWidget.jsx` - AI-powered chat interface with Claude 4.5 Sonnet
-  - `Footer.jsx` - Social links and contact info
+  - `LandingPage.jsx` - Main container with Lenis smooth scroll
+  - `Navbar.jsx` - Fixed navigation with glassmorphism
+  - `HeroSection.jsx` - Hero with massive K BEATS logo, stats, CTAs
+  - `MarqueeSection.jsx` - Infinite scrolling text marquee
+  - `ServicesSection.jsx` - 6 service cards with hover animations
+  - `AboutSection.jsx` - Brand story with signature element
+  - `SocialSection.jsx` - Large social platform links
+  - `FooterSection.jsx` - Footer with K BEATS logo marquee
+  - `ChatbotWidget.jsx` - AI-powered chat interface
 
-- **Styling:** Glassmorphism effects with backdrop-filter blur, gradient overlays, smooth transitions, Moon color palette
+- **Styling:** 
+  - Electric lime (#ccff00) on pure black (#050505)
+  - Unbounded font for headings, Outfit for body
+  - Framer Motion for scroll animations
+  - Lenis for smooth scrolling
+  - react-fast-marquee for infinite scrollers
 
 ### Backend (FastAPI + MongoDB)
 - **Models:**
@@ -36,7 +43,7 @@ Build a futuristic landing page for K Beats music channel (Instagram, YouTube, S
   - `ContactForm` - Direct contact submissions
 
 - **Routes:**
-  - `/api/chat/message` - Send message to Claude chatbot and get response
+  - `/api/chat/message` - Send message to Claude chatbot and get SSE response
   - `/api/chat/history/{session_id}` - Retrieve conversation history
   - `/api/chat/inquiry/{session_id}/update` - Update inquiry with contact details
   - `/api/contact/submit` - Submit contact form
@@ -44,89 +51,89 @@ Build a futuristic landing page for K Beats music channel (Instagram, YouTube, S
 
 - **Chatbot Integration:**
   - Uses `emergentintegrations` library with Claude Sonnet 4.5
-  - System message trained for K Beats services
-  - Maintains conversation context per session
-  - Stores all conversations in MongoDB
+  - Session-based conversations
+  - Casual, human-like personality
 
-## Color Palette Updates (Dec 29, 2025)
-**New Teal/Orange Theme:**
-- Primary Dark: #34596A (dark teal)
-- Primary Light: #80B4BF (light teal/cyan)
-- Accent Primary: #D97F30 (orange)
-- Accent Light: #F2A444 (light orange/gold)
-- Accent Subtle: #B5D2D9 (very light cyan)
+## Design System (Updated Dec 29, 2025)
 
-## Chatbot Improvements (Dec 29, 2025)
+### Color Palette
+- Background: #050505 (pure black)
+- Foreground: #FFFFFF
+- Primary: #ccff00 (electric lime)
+- Primary Hover: #b3e600
+- Secondary: #1A1A1C
+- Border: #222222 / rgba(255, 255, 255, 0.1)
+- Muted: #888888
+- Surface: rgba(26, 26, 28, 0.6)
 
-### Personality Enhancement
-- Changed from robotic corporate assistant to human, casual conversationalist
-- Uses natural language: "Yo! What's good?", "I gotchu", "heat for your project"
-- No formal "How may I assist you" vibes
-- Shows genuine excitement and personality
+### Typography
+- Headings: Unbounded (900 weight for impact)
+- Body: Outfit (300-400 weight for elegance)
+- Logo: K in lime, BEATS in white with letter-spacing
 
-### Streaming Responses
-- Implemented Server-Sent Events (SSE) for real-time streaming
-- Users see responses appear word-by-word instead of waiting
-- Better user experience with immediate feedback
-- Backend uses async generators for efficient streaming
-
-## Design Enhancements (Dec 29, 2025)
-
-### Scroll Animations
-- Intersection Observer for reveal-on-scroll effects
-- Elements fade in and slide up as user scrolls
-- Smooth transitions with staggered delays
-- Creates dynamic, engaging experience
-
-### Service Cards with Images
-- Added professional studio photography to all 6 service cards
-- Images with overlay gradients for text readability
-- 3D transform effects on hover
-- Detailed descriptions and feature lists
-- Makes services tangible and credible
-
-### Futuristic Effects
-- Parallax mouse movement on hero background
-- Glowing particles with teal/orange colors
-- Animated gradient borders
-- Glassmorphism with backdrop filters
-- Smooth hover transitions throughout
-- Rotating background gradients
+### Key Design Elements (landonorris.com inspired)
+- Massive typography reveals
+- Infinite horizontal marquee scrollers
+- Sharp 1px borders on dark backgrounds
+- Hover state transforms (scale, color changes)
+- Staggered scroll animations
+- Asymmetric layouts
+- Signature/personal elements
 
 ## What's Been Implemented (Dec 29, 2025)
 
-### ✅ Full-Stack Implementation
-1. **Frontend Landing Page**
-   - Futuristic hero section with particle animations
-   - Glassmorphism cards throughout
-   - 6 service cards with hover effects
-   - Tabbed showcase for social platforms
-   - Floating chatbot button with pulse animation
-   - Responsive design for mobile/tablet
-   - Moon color palette integration
+### ✅ Complete Frontend Redesign
+1. **Premium Hero Section**
+   - K BEATS massive logo with lime/white styling
+   - Neon abstract background image
+   - "Music Production & Mixing" subtitle
+   - Primary/secondary CTAs
+   - Stats: 500+ Projects, 3 Platforms, 24/7 Support
+   - Side social links (YT, IG, SC)
+   - Scroll indicator animation
 
-2. **AI Chatbot Integration**
-   - Claude Sonnet 4.5 via Emergent LLM key
-   - Session-based conversations
-   - Real-time message streaming
-   - Conversation history persistence
-   - Contact information collection
-   - Glassmorphism chat interface
+2. **Marquee Section**
+   - Two-track infinite scrolling marquee
+   - Alternating solid/outline typography
+   - Service keywords with lime accents
 
-3. **Backend API**
-   - FastAPI server with async endpoints
-   - MongoDB integration for data persistence
-   - Chat message storage and retrieval
-   - Inquiry management system
-   - CORS configured for frontend access
+3. **Services Grid**
+   - 6 service cards with professional imagery
+   - Hover effects (border glow, image scale)
+   - Custom icons from lucide-react
+   - Staggered scroll reveal animations
 
-4. **Design & UX**
-   - Glassmorphism effects with 20px backdrop blur
-   - Gradient text animations
-   - Smooth scroll behavior
-   - Hover state transitions on all interactive elements
-   - Particle canvas animation in hero
-   - Scroll indicator with animation
+4. **About Section**
+   - Abstract image with lime border accent
+   - "2024 Crafting Sound" tag
+   - Signature element
+   - Inspirational quote
+
+5. **Social Section**
+   - Large typography social links
+   - YouTube, Instagram, SoundCloud
+   - Hover transforms with arrow rotation
+
+6. **Footer**
+   - "Ready to Create?" CTA section
+   - K BEATS logo marquee band (lime background)
+   - Navigation, Services, Social links
+   - Copyright
+
+7. **Chatbot Widget**
+   - Sleek dark theme with lime accents
+   - K avatar
+   - Framer Motion animations
+   - SSE message receiving
+
+### ✅ Backend Fixes
+- Fixed chatbot to use `send_message` (not streaming)
+- SSE response format maintained for frontend compatibility
+
+### ✅ Animation Libraries
+- Framer Motion for scroll reveals
+- Lenis for smooth scrolling
+- react-fast-marquee for infinite scrollers
 
 ## API Contracts
 
@@ -140,12 +147,9 @@ Request:
   "message": "I need music for my wedding"
 }
 
-Response:
-{
-  "session_id": "session-123",
-  "response": "That's wonderful! I'd love to help...",
-  "timestamp": "2025-12-29T18:00:00Z"
-}
+Response: Server-Sent Events stream
+data: {"chunk": "Full response text"}
+data: {"done": true}
 ```
 
 #### GET /api/chat/history/{session_id}
@@ -153,33 +157,12 @@ Response:
 Response:
 [
   {
-    "id": "msg-1",
     "session_id": "session-123",
     "role": "user",
     "content": "Hello",
     "timestamp": "2025-12-29T18:00:00Z"
   }
 ]
-```
-
-### Contact Endpoints
-
-#### POST /api/contact/submit
-```json
-Request:
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "phone": "+1234567890",
-  "message": "Need music for vlog",
-  "project_type": "vlog"
-}
-
-Response:
-{
-  "success": true,
-  "message": "Thank you! We'll get back to you soon."
-}
 ```
 
 ## Environment Variables
@@ -206,30 +189,59 @@ EMERGENT_LLM_KEY=your-emergent-key-here
 
 ## Prioritized Backlog
 
-### P0 (Testing Required)
-- [ ] Test chatbot conversation flow end-to-end
-- [ ] Verify inquiry storage in MongoDB
-- [ ] Test all social media embeds
-- [ ] Mobile responsive testing
+### P0 (Critical - Next Tasks)
+- [ ] Lead Capture Notification System (Email/Dashboard)
+- [ ] Admin dashboard to view captured leads
 
-### P1 (Future Enhancements)
-- [ ] Admin dashboard to view inquiries
-- [ ] Email notifications for new inquiries
+### P1 (Important)
+- [ ] Email notifications for new inquiries (SendGrid)
 - [ ] Music sample player integration
 - [ ] Portfolio/gallery of past work
 - [ ] Testimonials section
-- [ ] Blog/news section
 
 ### P2 (Nice to Have)
 - [ ] Dark/light theme toggle
 - [ ] Animated music visualizer
-- [ ] Live chat with human support
 - [ ] Multi-language support
 - [ ] Advanced contact form with file upload
 
-## Next Tasks
-1. Run comprehensive testing using testing_agent_v3
-2. Fix any bugs found during testing
-3. Optimize performance and loading times
-4. Add meta tags for SEO
-5. Implement analytics tracking
+## File Structure
+```
+/app
+├── backend
+│   ├── .env
+│   ├── server.py
+│   ├── chatbot.py
+│   ├── models.py
+│   └── routes
+│       ├── __init__.py
+│       ├── chat.py
+│       └── contact.py
+├── frontend
+│   ├── .env
+│   └── src
+│       ├── App.js
+│       ├── App.css
+│       ├── index.css
+│       └── components
+│           ├── LandingPage.jsx / .css
+│           ├── Navbar.jsx / .css
+│           ├── HeroSection.jsx / .css
+│           ├── MarqueeSection.jsx / .css
+│           ├── ServicesSection.jsx / .css
+│           ├── AboutSection.jsx / .css
+│           ├── SocialSection.jsx / .css
+│           ├── FooterSection.jsx / .css
+│           └── ChatbotWidget.jsx / .css
+├── memory
+│   └── PRD.md
+└── design_guidelines.json
+```
+
+## Known Issues
+- None currently
+
+## Testing Notes
+- Chatbot tested and working with Claude Sonnet 4.5
+- Mobile responsive design verified
+- All animations and scroll effects working

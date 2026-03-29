@@ -44,15 +44,15 @@ async def create_chat_instance(session_id: str) -> LlmChat:
 
 
 async def get_chat_response(session_id: str, user_message: str, conversation_history: list = None):
-    """Get streaming response from chatbot"""
+    """Get response from chatbot"""
     try:
         chat = await create_chat_instance(session_id)
         user_msg = UserMessage(text=user_message)
         
-        # Return async generator for streaming
-        async for chunk in chat.stream_message(user_msg):
-            yield chunk
+        # Get the response (non-streaming)
+        response = await chat.send_message(user_msg)
+        return response
             
     except Exception as e:
         print(f"Error in chatbot: {str(e)}")
-        yield "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!"
+        return "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!"
