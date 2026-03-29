@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
+import MusicParticles from './MusicParticles';
 import './HeroSection.css';
 
 // Animated counter component
@@ -57,6 +58,9 @@ const HeroSection = ({ onOpenChat }) => {
           className="hero-bg-image"
         />
       </div>
+
+      {/* Interactive Music Particles */}
+      <MusicParticles />
 
       <div className="hero-content">
         {/* Main Title */}
