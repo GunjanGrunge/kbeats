@@ -43,3 +43,7 @@ memory/test_credentials.md
 
 # Coverage
 /coverage
+-e 
+# Environment files
+*.env
+*.env.*
