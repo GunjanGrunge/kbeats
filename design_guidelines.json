@@ -1,0 +1,77 @@
+{
+  "project_metadata": {
+    "domain": "Music Production Channel",
+    "brand_name": "K BEATS",
+    "theme": "dark",
+    "archetype": "7 (Electric & Neon) + High-End Luxury"
+  },
+  "color_palette": {
+    "background": "#050505",
+    "foreground": "#FFFFFF",
+    "primary": "#ccff00",
+    "primary_hover": "#b3e600",
+    "secondary": "#1A1A1C",
+    "border": "#222222",
+    "muted": "#888888",
+    "surface": "rgba(26, 26, 28, 0.6)"
+  },
+  "typography": {
+    "headings": "Unbounded, sans-serif",
+    "body": "Outfit, sans-serif",
+    "logo_implementation": "<span className='font-black text-[#ccff00]'>K</span> <span className='font-light tracking-widest text-white'>BEATS</span>"
+  },
+  "layout_and_spacing": {
+    "bento_grid": "grid-cols-1 md:grid-cols-12 gap-8",
+    "section_padding": "py-24 md:py-32",
+    "container": "w-full max-w-[1400px] mx-auto px-6 md:px-12"
+  },
+  "visual_effects": {
+    "glassmorphism": "backdrop-blur-xl bg-[#050505]/60 border border-white/10",
+    "borders": "1px solid rgba(255, 255, 255, 0.1)",
+    "hover_glow": "hover:shadow-[0_0_30px_rgba(204,255,0,0.15)]",
+    "text_stroke": "text-transparent [-webkit-text-stroke:1px_#ffffff]"
+  },
+  "core_components": {
+    "navbar": "Sticky, glassmorphism (`backdrop-blur-xl bg-[#050505]/70`). Logo left. Links center. Primary CTA right. Add `data-testid='navbar'`.",
+    "hero_section": "Massive typography. H1 'K BEATS'. Neon abstract background with `bg-black/50` overlay. Use Framer Motion for upward stagger reveal. Add `data-testid='hero-section'`.",
+    "infinite_marquee": "Use `react-fast-marquee`. Massive uppercase text (e.g., `text-8xl`), alternating between solid white and stroked outline (`text-transparent [-webkit-text-stroke:2px_#333]`). Add `data-testid='marquee-section'`.",
+    "services_showcase": "Horizontal scroll or asymmetrical bento grid. Each card is flat `#1A1A1C` with `1px border-white/10`. Hover state triggers image scale-up and border turns `#ccff00`. Add `data-testid='service-card'`.",
+    "social_integration": "Large interactive blocks or a dedicated sidebar. Huge typography for 'YOUTUBE', 'INSTAGRAM', 'SOUNDCLOUD'. Add `data-testid='social-link'`.",
+    "chatbot_widget": "Floating button bottom-right with electric lime glow. Opens glassmorphic chat interface. Add `data-testid='chatbot-trigger'` and `data-testid='chatbot-window'`."
+  },
+  "animation_guidelines": {
+    "scroll_library": "MUST install and use `@studio-freight/lenis` for smooth scrolling (crucial for the premium feel).",
+    "scroll_reveal": "initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}",
+    "hover_transitions": "transition-all duration-500 ease-out"
+  },
+  "media_assets": {
+    "hero_background": {
+      "url": "https://images.unsplash.com/photo-1759735541630-036eefb7cd3a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwyfHxuZW9uJTIwYWJzdHJhY3QlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NzQ4MDk3MDF8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract neon streaks for hero banner"
+    },
+    "custom_production": {
+      "url": "https://images.pexels.com/photos/5749200/pexels-photo-5749200.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Producer working in dark studio"
+    },
+    "mixing_mastering": {
+      "url": "https://images.unsplash.com/photo-1610716632424-4d45990bcd48?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxtdXNpYyUyMHN0dWRpbyUyMGRhcmt8ZW58MHx8fHwxNzc0ODA5Njk0fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Producer on computer"
+    },
+    "events_weddings": {
+      "url": "https://images.unsplash.com/photo-1765279113604-efe3b0301134?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwxfHxkaiUyMGxpdmUlMjBwZXJmb3JtYW5jZSUyMGxhc2VyfGVufDB8fHx8MTc3NDgwOTcwMXww&ixlib=rb-4.1.0&q=85",
+      "description": "DJ live performance with blue lasers"
+    },
+    "abstract_accent": {
+      "url": "https://images.unsplash.com/photo-1771945701672-70e9be57c6a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxuZW9uJTIwYWJzdHJhY3QlMjBkYXJrJTIwYmFja2dyb3VuZHxlbnwwfHx8fDE3NzQ4MDk3MDF8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract colorful light streaks"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Run: `yarn add framer-motion @studio-freight/lenis lucide-react react-fast-marquee`",
+    "Replace Shadcn default UI styles entirely for marketing sections. Use raw HTML/Tailwind with Framer Motion.",
+    "Do NOT use default Vercel/Stripe looking cards. Go cardless or use sharp 1px borders on flat backgrounds.",
+    "Implement the text-based logo snippet provided. DO NOT use placeholder text for images, only use the URLs provided.",
+    "Use `.js` or `.jsx` file extensions.",
+    "Every button, link, and major section MUST have a `data-testid`."
+  ]
+}

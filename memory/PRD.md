@@ -186,7 +186,7 @@ Response:
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://sonic-studio-26.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://audio-canvas-40.preview.emergentagent.com
 WDS_SOCKET_PORT=443
 ENABLE_HEALTH_CHECK=false
 ```
