@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Marquee from 'react-fast-marquee';
-import { Mail, Headphones } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import './FooterSection.css';
 
 const FooterSection = () => {
@@ -101,7 +101,6 @@ const FooterSection = () => {
         <Marquee speed={40} gradient={false}>
           {[...Array(6)].map((_, i) => (
             <div key={i} className="footer-marquee-item">
-              <Headphones size={32} strokeWidth={2} />
               <span className="marquee-logo-k">K</span>
               <span className="marquee-logo-beats">BEATS</span>
             </div>
