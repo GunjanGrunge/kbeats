@@ -8,6 +8,7 @@ Build a premium, futuristic landing page for K Beats music channel (Instagram, Y
 - Includes a conversational AI chatbot to understand requirements and collect client info
 - Features premium design inspired by landonorris.com with smooth animations and CTAs
 - Has a polished K BEATS logo/branding
+- Sends email notifications to artists@kebeatsofficial.com when leads come in
 
 ## User Personas
 1. **Content Creators** - Need custom music for vlogs and videos
@@ -23,11 +24,11 @@ Build a premium, futuristic landing page for K Beats music channel (Instagram, Y
   - `Navbar.jsx` - Fixed navigation with glassmorphism
   - `HeroSection.jsx` - Hero with massive K BEATS logo, stats, CTAs
   - `MarqueeSection.jsx` - Infinite scrolling text marquee
-  - `ServicesSection.jsx` - 6 service cards with hover animations
+  - `ServicesSection.jsx` - 6 service cards with CTA buttons (Chat/Email)
   - `AboutSection.jsx` - Brand story with signature element
   - `SocialSection.jsx` - Large social platform links
-  - `FooterSection.jsx` - Footer with K BEATS logo marquee
-  - `ChatbotWidget.jsx` - AI-powered chat interface
+  - `FooterSection.jsx` - Footer with K BEATS logo marquee and email
+  - `ChatbotWidget.jsx` - AI-powered chat interface with headphones icon
 
 - **Styling:** 
   - Electric lime (#ccff00) on pure black (#050505)
@@ -35,6 +36,7 @@ Build a premium, futuristic landing page for K Beats music channel (Instagram, Y
   - Framer Motion for scroll animations
   - Lenis for smooth scrolling
   - react-fast-marquee for infinite scrollers
+  - Music-themed icons (headphones) for chat button and avatar
 
 ### Backend (FastAPI + MongoDB)
 - **Models:**
@@ -49,36 +51,9 @@ Build a premium, futuristic landing page for K Beats music channel (Instagram, Y
   - `/api/contact/submit` - Submit contact form
   - `/api/contact/inquiries` - Get all inquiries (admin)
 
-- **Chatbot Integration:**
-  - Uses `emergentintegrations` library with Claude Sonnet 4.5
-  - Session-based conversations
-  - Casual, human-like personality
-
-## Design System (Updated Dec 29, 2025)
-
-### Color Palette
-- Background: #050505 (pure black)
-- Foreground: #FFFFFF
-- Primary: #ccff00 (electric lime)
-- Primary Hover: #b3e600
-- Secondary: #1A1A1C
-- Border: #222222 / rgba(255, 255, 255, 0.1)
-- Muted: #888888
-- Surface: rgba(26, 26, 28, 0.6)
-
-### Typography
-- Headings: Unbounded (900 weight for impact)
-- Body: Outfit (300-400 weight for elegance)
-- Logo: K in lime, BEATS in white with letter-spacing
-
-### Key Design Elements (landonorris.com inspired)
-- Massive typography reveals
-- Infinite horizontal marquee scrollers
-- Sharp 1px borders on dark backgrounds
-- Hover state transforms (scale, color changes)
-- Staggered scroll animations
-- Asymmetric layouts
-- Signature/personal elements
+- **Services:**
+  - `chatbot.py` - Claude Sonnet 4.5 integration
+  - `email_service.py` - SendGrid integration for lead notifications
 
 ## What's Been Implemented (Dec 29, 2025)
 
@@ -86,84 +61,52 @@ Build a premium, futuristic landing page for K Beats music channel (Instagram, Y
 1. **Premium Hero Section**
    - K BEATS massive logo with lime/white styling
    - Neon abstract background image
-   - "Music Production & Mixing" subtitle
    - Primary/secondary CTAs
    - Stats: 500+ Projects, 3 Platforms, 24/7 Support
    - Side social links (YT, IG, SC)
-   - Scroll indicator animation
 
 2. **Marquee Section**
    - Two-track infinite scrolling marquee
    - Alternating solid/outline typography
-   - Service keywords with lime accents
 
-3. **Services Grid**
-   - 6 service cards with professional imagery
-   - Hover effects (border glow, image scale)
-   - Custom icons from lucide-react
-   - Staggered scroll reveal animations
+3. **Services Grid with CTAs**
+   - 6 detailed service cards
+   - Feature bullet points for each service
+   - "Chat with K Beats AI" CTA button
+   - "artists@kebeatsofficial.com" email CTA button
 
 4. **About Section**
    - Abstract image with lime border accent
    - "2024 Crafting Sound" tag
-   - Signature element
-   - Inspirational quote
+   - Signature element and quote
 
 5. **Social Section**
    - Large typography social links
-   - YouTube, Instagram, SoundCloud
-   - Hover transforms with arrow rotation
 
 6. **Footer**
-   - "Ready to Create?" CTA section
-   - K BEATS logo marquee band (lime background)
-   - Navigation, Services, Social links
-   - Copyright
+   - "Ready to Create?" CTA with email button
+   - K BEATS logo marquee with headphones icons
+   - Email: artists@kebeatsofficial.com
+   - Full service list in footer
 
 7. **Chatbot Widget**
-   - Sleek dark theme with lime accents
-   - K avatar
-   - Framer Motion animations
-   - SSE message receiving
+   - Music-themed headphones icon (not overlapping with Emergent badge)
+   - Headphones avatar in chat header
+   - Small headphones next to AI messages
+   - "Or email us directly: artists@kebeatsofficial.com" link
+   - Rounded chat bubbles
 
-### ✅ Backend Fixes
-- Fixed chatbot to use `send_message` (not streaming)
-- SSE response format maintained for frontend compatibility
+### ✅ Backend Implementation
+- Claude Sonnet 4.5 chatbot integration
+- Lead capture to MongoDB (9+ leads captured)
+- SendGrid email service (pending sender verification)
+- Background task for email notifications
 
-### ✅ Animation Libraries
-- Framer Motion for scroll reveals
-- Lenis for smooth scrolling
-- react-fast-marquee for infinite scrollers
-
-## API Contracts
-
-### Chat Endpoints
-
-#### POST /api/chat/message
-```json
-Request:
-{
-  "session_id": "session-123",
-  "message": "I need music for my wedding"
-}
-
-Response: Server-Sent Events stream
-data: {"chunk": "Full response text"}
-data: {"done": true}
-```
-
-#### GET /api/chat/history/{session_id}
-```json
-Response:
-[
-  {
-    "session_id": "session-123",
-    "role": "user",
-    "content": "Hello",
-    "timestamp": "2025-12-29T18:00:00Z"
-  }
-]
-```
+## Contact Information
+- **Email:** artists@kebeatsofficial.com
+- **YouTube:** https://www.youtube.com/@Kbeats_official
+- **Instagram:** https://www.instagram.com/kbeatsofficial/
+- **SoundCloud:** https://soundcloud.com/k-beats-291187445
 
 ## Environment Variables
 
@@ -179,31 +122,42 @@ ENABLE_HEALTH_CHECK=false
 MONGO_URL="mongodb://localhost:27017"
 DB_NAME="test_database"
 CORS_ORIGINS="*"
-EMERGENT_LLM_KEY=your-emergent-key-here
+EMERGENT_LLM_KEY=sk-emergent-xxx
+SENDGRID_API_KEY=SG.xxx
+KBEATS_EMAIL=artists@kebeatsofficial.com
 ```
 
-## Social Media Links
-- YouTube: https://www.youtube.com/@Kbeats_official
-- Instagram: https://www.instagram.com/kbeatsofficial/
-- SoundCloud: https://soundcloud.com/k-beats-291187445
+## Action Required: Email Verification
+
+The SendGrid email notifications are coded and ready, but the sender email needs verification:
+
+1. Log into SendGrid at https://app.sendgrid.com
+2. Go to Settings → Sender Authentication
+3. Either:
+   - **Option A:** Verify the domain `kebeatsofficial.com` (recommended)
+   - **Option B:** Create a Single Sender and verify `artists@kebeatsofficial.com`
+4. Once verified, emails will automatically start sending
+
+**Note:** Leads are still being captured in the database regardless of email status.
 
 ## Prioritized Backlog
 
-### P0 (Critical - Next Tasks)
-- [ ] Lead Capture Notification System (Email/Dashboard)
-- [ ] Admin dashboard to view captured leads
+### P0 (Completed)
+- [x] Premium landing page redesign
+- [x] Music-themed chatbot with headphones icon
+- [x] Service CTAs with email/chat options
+- [x] Lead capture to database
+- [x] SendGrid integration (pending verification)
 
-### P1 (Important)
-- [ ] Email notifications for new inquiries (SendGrid)
+### P1 (Next)
+- [ ] Admin dashboard to view leads
 - [ ] Music sample player integration
 - [ ] Portfolio/gallery of past work
-- [ ] Testimonials section
 
-### P2 (Nice to Have)
+### P2 (Future)
+- [ ] Testimonials section
 - [ ] Dark/light theme toggle
-- [ ] Animated music visualizer
 - [ ] Multi-language support
-- [ ] Advanced contact form with file upload
 
 ## File Structure
 ```
@@ -213,6 +167,7 @@ EMERGENT_LLM_KEY=your-emergent-key-here
 │   ├── server.py
 │   ├── chatbot.py
 │   ├── models.py
+│   ├── email_service.py
 │   └── routes
 │       ├── __init__.py
 │       ├── chat.py
@@ -221,7 +176,6 @@ EMERGENT_LLM_KEY=your-emergent-key-here
 │   ├── .env
 │   └── src
 │       ├── App.js
-│       ├── App.css
 │       ├── index.css
 │       └── components
 │           ├── LandingPage.jsx / .css
@@ -237,11 +191,3 @@ EMERGENT_LLM_KEY=your-emergent-key-here
 │   └── PRD.md
 └── design_guidelines.json
 ```
-
-## Known Issues
-- None currently
-
-## Testing Notes
-- Chatbot tested and working with Claude Sonnet 4.5
-- Mobile responsive design verified
-- All animations and scroll effects working

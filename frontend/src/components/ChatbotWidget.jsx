@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Loader2 } from 'lucide-react';
+import { X, Send, Loader2, Headphones } from 'lucide-react';
 import './ChatbotWidget.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -26,7 +26,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
       setMessages([
         {
           role: 'assistant',
-          content: "Yo! What's good? Need some heat for your project? Whether it's a vlog, wedding, event, or just trying to drop some fire - I gotchu. What are we cooking up today?",
+          content: "Yo! What's good? 🎧 Need some heat for your project? Whether it's a vlog, wedding, event, or you're trying to drop some fire tracks — I gotchu. What are we cooking up today?",
           timestamp: new Date()
         }
       ]);
@@ -110,7 +110,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
       console.error('Error sending message:', error);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "Yo, my bad - connection's being weird. Try again or hit up our socials!",
+        content: "Yo, my bad - connection's being weird. Try again or hit us up at artists@kebeatsofficial.com!",
         timestamp: new Date()
       }]);
     } finally {
@@ -147,7 +147,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
             <div className="chatbot-header">
               <div className="chatbot-header-info">
                 <div className="chatbot-avatar">
-                  <span className="avatar-k">K</span>
+                  <Headphones size={20} strokeWidth={2.5} />
                 </div>
                 <div>
                   <h3>K Beats AI</h3>
@@ -177,6 +177,11 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {message.role === 'assistant' && (
+                    <div className="message-avatar">
+                      <Headphones size={14} />
+                    </div>
+                  )}
                   <div className="message-content">
                     {message.content}
                     {message.isStreaming && (
@@ -187,6 +192,9 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
               ))}
               {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
                 <div className="message assistant">
+                  <div className="message-avatar">
+                    <Headphones size={14} />
+                  </div>
                   <div className="message-content">
                     <div className="typing-indicator">
                       <span></span>
@@ -197,6 +205,12 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
                 </div>
               )}
               <div ref={messagesEndRef} />
+            </div>
+
+            {/* Footer with email link */}
+            <div className="chatbot-footer-info">
+              <span>Or email us directly:</span>
+              <a href="mailto:artists@kebeatsofficial.com">artists@kebeatsofficial.com</a>
             </div>
 
             {/* Input */}

@@ -8,6 +8,7 @@ import AboutSection from './AboutSection';
 import SocialSection from './SocialSection';
 import FooterSection from './FooterSection';
 import ChatbotWidget from './ChatbotWidget';
+import { Headphones } from 'lucide-react';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -37,7 +38,7 @@ const LandingPage = () => {
       <Navbar onOpenChat={() => setShowChatbot(true)} />
       <HeroSection onOpenChat={() => setShowChatbot(true)} />
       <MarqueeSection />
-      <ServicesSection />
+      <ServicesSection onOpenChat={() => setShowChatbot(true)} />
       <AboutSection />
       <SocialSection />
       <FooterSection />
@@ -47,17 +48,15 @@ const LandingPage = () => {
         onClose={() => setShowChatbot(false)} 
       />
       
-      {/* Floating chat button */}
+      {/* Floating chat button with music icon */}
       {!showChatbot && (
         <button 
           className="floating-chat-btn"
           onClick={() => setShowChatbot(true)}
-          aria-label="Open chat"
+          aria-label="Chat with K Beats AI"
           data-testid="chatbot-trigger"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-          </svg>
+          <Headphones size={28} strokeWidth={2.5} />
         </button>
       )}
     </div>

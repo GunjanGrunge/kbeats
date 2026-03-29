@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from models import ChatMessage, ChatMessageCreate, ChatResponse, MusicInquiry
 from chatbot import get_chat_response
+from email_service import email_service
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from datetime import datetime
@@ -15,8 +16,18 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'myapp')]
 
 
+async def send_lead_email_background(session_id: str):
+    """Background task to send lead notification email"""
+    try:
+        inquiry = await db.inquiries.find_one({"session_id": session_id}, {"_id": 0})
+        if inquiry:
+            await email_service.send_lead_notification(inquiry)
+    except Exception as e:
+        print(f"Error sending lead email: {str(e)}")
+
+
 @router.post("/message")
-async def send_message(chat_input: ChatMessageCreate):
+async def send_message(chat_input: ChatMessageCreate, background_tasks: BackgroundTasks):
     """Send a message to the chatbot and get response"""
     try:
         # Save user message
@@ -27,9 +38,11 @@ async def send_message(chat_input: ChatMessageCreate):
         )
         await db.chat_messages.insert_one(user_message.dict())
         
-        # Create or update inquiry
+        # Check if this is a new inquiry
         inquiry = await db.inquiries.find_one({"session_id": chat_input.session_id})
-        if not inquiry:
+        is_new_inquiry = inquiry is None
+        
+        if is_new_inquiry:
             inquiry_data = MusicInquiry(
                 session_id=chat_input.session_id,
                 requirements=chat_input.message,
@@ -77,9 +90,12 @@ async def send_message(chat_input: ChatMessageCreate):
             }
         )
         
-        # Send response as SSE for frontend compatibility (simulated streaming)
+        # Send email notification for new inquiries (in background)
+        if is_new_inquiry:
+            background_tasks.add_task(send_lead_email_background, chat_input.session_id)
+        
+        # Send response as SSE for frontend compatibility
         async def generate_stream():
-            # Send the full response as one chunk
             yield f"data: {json.dumps({'chunk': response})}\n\n"
             yield f"data: {json.dumps({'done': True})}\n\n"
         

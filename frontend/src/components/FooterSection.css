@@ -23,7 +23,33 @@
   font-weight: 300;
   color: #888888;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.footer-cta-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 36px;
+  background: #ccff00;
+  color: #050505;
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-email-btn:hover {
+  background: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(204, 255, 0, 0.3);
 }
 
 /* Marquee */
@@ -36,8 +62,9 @@
 .footer-marquee-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   padding: 0 60px;
+  color: #050505;
 }
 
 .marquee-logo-k {
@@ -111,6 +138,22 @@
   font-weight: 300;
   color: #888888;
   line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.footer-email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: #ccff00;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footer-email-link:hover {
+  opacity: 0.8;
 }
 
 /* Links */

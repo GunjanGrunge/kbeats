@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Marquee from 'react-fast-marquee';
+import { Mail, Headphones } from 'lucide-react';
 import './FooterSection.css';
 
 const FooterSection = () => {
@@ -31,8 +32,18 @@ const FooterSection = () => {
           <h2 className="footer-cta-title">Ready to Create?</h2>
           <p className="footer-cta-text">
             Let's turn your vision into sound. Start a conversation with our AI assistant 
-            and tell us about your project.
+            or reach out directly — we're here to make your project legendary.
           </p>
+          <div className="footer-cta-actions">
+            <a 
+              href="mailto:artists@kebeatsofficial.com" 
+              className="footer-email-btn"
+              data-testid="footer-email-cta"
+            >
+              <Mail size={20} />
+              <span>artists@kebeatsofficial.com</span>
+            </a>
+          </div>
         </motion.div>
       </div>
 
@@ -41,6 +52,7 @@ const FooterSection = () => {
         <Marquee speed={40} gradient={false}>
           {[...Array(6)].map((_, i) => (
             <div key={i} className="footer-marquee-item">
+              <Headphones size={32} strokeWidth={2} />
               <span className="marquee-logo-k">K</span>
               <span className="marquee-logo-beats">BEATS</span>
             </div>
@@ -61,6 +73,10 @@ const FooterSection = () => {
               <p className="footer-description">
                 Crafting beats that hit different. Custom music for creators, artists, events & beyond.
               </p>
+              <a href="mailto:artists@kebeatsofficial.com" className="footer-email-link">
+                <Mail size={16} />
+                artists@kebeatsofficial.com
+              </a>
             </div>
 
             {/* Links */}
@@ -81,10 +97,12 @@ const FooterSection = () => {
             <div className="footer-links">
               <h4>Services</h4>
               <ul>
-                <li>Custom Production</li>
+                <li>Custom Beat Production</li>
                 <li>Mixing & Mastering</li>
                 <li>Events & Weddings</li>
-                <li>Artist Support</li>
+                <li>Artist Development</li>
+                <li>Trending Remixes</li>
+                <li>Vlog & Content Music</li>
               </ul>
             </div>
 
