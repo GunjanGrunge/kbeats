@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Loader2, Headphones } from 'lucide-react';
 import './ChatbotWidget.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const API = process.env.REACT_APP_BACKEND_URL
+  ? `${process.env.REACT_APP_BACKEND_URL}/api`
+  : '/api';
 
 const ChatbotWidget = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([]);
@@ -60,52 +61,15 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
         })
       });
 
-      if (!response.ok) throw new Error('Stream failed');
+      if (!response.ok) throw new Error('Request failed');
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      
-      const streamingMsgId = Date.now();
+      const data = await response.json();
+
       setMessages(prev => [...prev, {
-        id: streamingMsgId,
         role: 'assistant',
-        content: '',
-        timestamp: new Date(),
-        isStreaming: true
+        content: data.response,
+        timestamp: new Date()
       }]);
-
-      let buffer = '';
-      let fullContent = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = JSON.parse(line.slice(6));
-            if (data.chunk) {
-              fullContent += data.chunk;
-              setMessages(prev => prev.map(msg => 
-                msg.id === streamingMsgId 
-                  ? { ...msg, content: fullContent }
-                  : msg
-              ));
-            }
-            if (data.done) {
-              setMessages(prev => prev.map(msg => 
-                msg.id === streamingMsgId 
-                  ? { ...msg, isStreaming: false }
-                  : msg
-              ));
-            }
-          }
-        }
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       setMessages(prev => [...prev, {
@@ -170,12 +134,10 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
             {/* Messages */}
             <div className="chatbot-messages">
               {messages.map((message, index) => (
-                <motion.div
+                <div
                   key={index}
                   className={`message ${message.role}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  style={{ animation: 'messageIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both' }}
                 >
                   {message.role === 'assistant' && (
                     <div className="message-avatar">
@@ -188,7 +150,7 @@ const ChatbotWidget = ({ isOpen, onClose }) => {
                       <span className="typing-cursor">|</span>
                     )}
                   </div>
-                </motion.div>
+                </div>
               ))}
               {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
                 <div className="message assistant">

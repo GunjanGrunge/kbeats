@@ -5,7 +5,10 @@
   right: 0;
   z-index: 100;
   padding: 20px 24px;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navbar.scrolled {
@@ -68,7 +71,7 @@
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  transition: color 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
@@ -80,15 +83,17 @@
   width: 0;
   height: 1px;
   background: #ccff00;
-  transition: width 0.3s ease;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-link:hover {
-  color: #ffffff;
-}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: #ffffff;
+  }
 
-.nav-link:hover::after {
-  width: 100%;
+  .nav-link:hover::after {
+    width: 100%;
+  }
 }
 
 /* CTA Button */
@@ -103,7 +108,9 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   border-radius: 0;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (min-width: 768px) {
@@ -112,10 +119,17 @@
   }
 }
 
-.nav-cta:hover {
-  background: #b3e600;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(204, 255, 0, 0.3);
+@media (hover: hover) and (pointer: fine) {
+  .nav-cta:hover {
+    background: #b3e600;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(204, 255, 0, 0.3);
+  }
+}
+
+.nav-cta:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
 }
 
 /* Mobile Menu Toggle */
@@ -141,7 +155,8 @@
   width: 24px;
   height: 2px;
   background: #ffffff;
-  transition: all 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-toggle.active span:nth-child(1) {
@@ -181,10 +196,16 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mobile-nav-link:hover {
+@media (hover: hover) and (pointer: fine) {
+  .mobile-nav-link:hover {
+    color: #ccff00;
+  }
+}
+
+.mobile-nav-link:active {
   color: #ccff00;
 }
 
@@ -198,4 +219,11 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-cta:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
 }

@@ -1,6 +1,10 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+import { ensureEnvLoaded } from './load-env.js';
 
-const MODEL_ID = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
+ensureEnvLoaded();
+
+
+const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
 const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings.
 
@@ -25,14 +29,27 @@ let bedrockClient = null;
 
 function getClient() {
   if (!bedrockClient) {
+    const region = process.env.AWS_REGION || 'us-east-1';
+    const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+    const sessionToken = process.env.AWS_SESSION_TOKEN;
+
+    const hasStaticCredentials = Boolean(accessKeyId && secretAccessKey);
+
     bedrockClient = new BedrockRuntimeClient({
-      region: process.env.AWS_REGION || 'us-east-1',
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      },
+      region,
+      ...(hasStaticCredentials
+        ? {
+            credentials: {
+              accessKeyId,
+              secretAccessKey,
+              ...(sessionToken ? { sessionToken } : {}),
+            },
+          }
+        : {}),
     });
   }
+
   return bedrockClient;
 }
 
@@ -50,25 +67,37 @@ export async function getChatResponse(sessionId, userMessage, conversationHistor
     }
     messages.push({ role: 'user', content: [{ type: 'text', text: userMessage }] });
 
+    const payload = {
+      anthropic_version: 'bedrock-2023-05-31',
+      max_tokens: 1024,
+      system: SYSTEM_MESSAGE,
+      messages,
+    };
+
     const command = new InvokeModelCommand({
       modelId: MODEL_ID,
       contentType: 'application/json',
       accept: 'application/json',
-      body: JSON.stringify({
-        anthropic_version: 'bedrock-2023-05-31',
-        max_tokens: 1024,
-        system: SYSTEM_MESSAGE,
-        messages,
-      }),
+      body: new TextEncoder().encode(JSON.stringify(payload)),
     });
 
     const response = await client.send(command);
-    const parsed = JSON.parse(Buffer.from(response.body).toString('utf8'));
+    const parsed = JSON.parse(new TextDecoder().decode(response.body));
+
     return parsed.content?.[0]?.text || '';
   } catch (error) {
-    console.error('Error in chatbot:', error.message);
+    console.error('Error in chatbot Bedrock call:', {
+      message: error?.message,
+      name: error?.name,
+      modelId: MODEL_ID,
+      region: process.env.AWS_REGION || 'us-east-1',
+      requestId: error?.$metadata?.requestId,
+      httpStatusCode: error?.$metadata?.httpStatusCode,
+      sessionId,
+    });
+
     return "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!";
   }
 }
 
-export { SYSTEM_MESSAGE };
+export { SYSTEM_MESSAGE, MODEL_ID };

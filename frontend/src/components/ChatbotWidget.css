@@ -87,13 +87,22 @@
   height: 36px;
   background: rgba(255, 255, 255, 0.05);
   color: #888888;
-  transition: all 0.3s ease;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 50%;
 }
 
-.close-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+}
+
+.close-btn:active {
+  transform: scale(0.9);
+  transition-duration: 0.1s;
 }
 
 /* Messages */
@@ -110,17 +119,22 @@
   max-width: 85%;
   display: flex;
   gap: 10px;
-  animation: messageIn 0.3s ease;
 }
 
 @keyframes messageIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes messageIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -255,7 +269,7 @@
   font-family: 'Outfit', sans-serif;
   font-size: 0.875rem;
   outline: none;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .chatbot-input input::placeholder {
@@ -275,12 +289,20 @@
   background: #ccff00;
   color: #050505;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.chatbot-input button:hover:not(:disabled) {
-  background: #b3e600;
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .chatbot-input button:hover:not(:disabled) {
+    background: #b3e600;
+    transform: scale(1.05);
+  }
+}
+
+.chatbot-input button:active:not(:disabled) {
+  transform: scale(0.93);
+  transition-duration: 0.1s;
 }
 
 .chatbot-input button:disabled {

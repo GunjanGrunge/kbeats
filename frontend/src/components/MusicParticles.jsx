@@ -6,10 +6,12 @@ const MusicParticles = () => {
   const particlesRef = useRef([]);
   
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
-    
+
     // Music note symbols
     const musicNotes = ['♪', '♫', '♬', '♩', '𝄞', '𝅘𝅥𝅮'];
     

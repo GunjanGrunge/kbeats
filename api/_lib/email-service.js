@@ -1,14 +1,25 @@
 import sgMail from '@sendgrid/mail';
+import { ensureEnvLoaded } from './load-env.js';
+
+ensureEnvLoaded();
+
 
 class EmailService {
   constructor() {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     this.kbeatsEmail = process.env.KBEATS_EMAIL || 'artists@kebeatsofficial.com';
+
+    const apiKey = process.env.SENDGRID_API_KEY;
+    this.isConfigured = Boolean(apiKey && apiKey.startsWith('SG.'));
+
+    if (this.isConfigured) {
+      sgMail.setApiKey(apiKey);
+    } else {
+      console.log('SendGrid disabled: missing or invalid SENDGRID_API_KEY');
+    }
   }
 
   async sendLeadNotification(leadData) {
-    if (!process.env.SENDGRID_API_KEY) {
-      console.log('SendGrid API key not configured');
+    if (!this.isConfigured) {
       return false;
     }
 
@@ -16,7 +27,7 @@ class EmailService {
       // Format conversation history
       let conversationHtml = '';
       const conversationHistory = leadData.conversation_history || [];
-      
+
       for (const msg of conversationHistory) {
         const role = msg.role || 'unknown';
         const content = msg.content || '';
@@ -62,7 +73,7 @@ class EmailService {
               </div>
               <p style="color: #ccff00; margin-top: 8px;">New Lead Alert!</p>
             </div>
-            
+
             <div class="section">
               <div class="section-title">Lead Information</div>
               <div class="info-item">
@@ -90,7 +101,7 @@ class EmailService {
                 <div class="info-value">${leadData.project_type || 'Not specified'}</div>
               </div>
             </div>
-            
+
             <div class="section">
               <div class="section-title">Conversation History</div>
               <div class="conversation">

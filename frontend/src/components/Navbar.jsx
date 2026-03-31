@@ -33,8 +33,8 @@ const Navbar = ({ onOpenChat }) => {
     <>
       <motion.nav
         className={`navbar ${scrolled ? 'scrolled' : ''}`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
+        initial={{ transform: 'translateY(-100px)' }}
+        animate={{ transform: 'translateY(0px)' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         data-testid="navbar"
       >
@@ -98,9 +98,9 @@ const Navbar = ({ onOpenChat }) => {
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
                 className="mobile-nav-link"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
+                initial={{ opacity: 0, transform: 'translateX(-20px)' }}
+                animate={{ opacity: 1, transform: 'translateX(0px)' }}
+                transition={{ delay: i * 0.06, ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
               >
                 {link.label}
               </motion.button>
@@ -113,7 +113,7 @@ const Navbar = ({ onOpenChat }) => {
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.24, ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
             >
               Let's Talk
             </motion.button>

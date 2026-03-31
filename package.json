@@ -2,7 +2,16 @@
   "name": "kbeats",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "cd frontend && npm install --legacy-peer-deps && npm run build"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1020.0",
+    "@sendgrid/mail": "^7.7.0",
+    "@vercel/functions": "^1.0.0",
+    "dotenv": "^16.6.1",
+    "mongodb": "^6.5.0",
+    "uuid": "^9.0.1"
   }
 }

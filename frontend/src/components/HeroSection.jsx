@@ -66,9 +66,9 @@ const HeroSection = ({ onOpenChat }) => {
         {/* Main Title */}
         <motion.div
           className="hero-title-wrapper"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, transform: 'translateY(60px)' }}
+          animate={{ opacity: 1, transform: 'translateY(0px)' }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
           <h1 className="hero-title">
             <span className="hero-title-k">K</span>
@@ -79,9 +79,9 @@ const HeroSection = ({ onOpenChat }) => {
         {/* Subtitle */}
         <motion.p
           className="hero-subtitle"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, transform: 'translateY(40px)' }}
+          animate={{ opacity: 1, transform: 'translateY(0px)' }}
+          transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
           Music Production & Mixing
         </motion.p>
@@ -89,9 +89,9 @@ const HeroSection = ({ onOpenChat }) => {
         {/* Description */}
         <motion.p
           className="hero-description"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, transform: 'translateY(40px)' }}
+          animate={{ opacity: 1, transform: 'translateY(0px)' }}
+          transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
         >
           Crafting beats that hit different. Custom music for creators, artists, 
           events & beyond. Where sound meets vision.
@@ -100,9 +100,9 @@ const HeroSection = ({ onOpenChat }) => {
         {/* CTAs */}
         <motion.div
           className="hero-ctas"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, transform: 'translateY(40px)' }}
+          animate={{ opacity: 1, transform: 'translateY(0px)' }}
+          transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
           <button 
             className="hero-btn-primary"
@@ -168,11 +168,11 @@ const HeroSection = ({ onOpenChat }) => {
       </motion.div>
 
       {/* Side Social Links */}
-      <motion.div 
+      <motion.div
         className="hero-social-side"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.8 }}
+        initial={{ opacity: 0, transform: 'translateX(20px)' }}
+        animate={{ opacity: 1, transform: 'translateX(0px)' }}
+        transition={{ duration: 0.65, delay: 0.6 }}
       >
         <a 
           href="https://www.youtube.com/@Kbeats_official" 
