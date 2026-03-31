@@ -30,6 +30,11 @@ export async function connectDB() {
       strict: true,
       deprecationErrors: true,
     },
+    // Keep DB failures from hanging Vercel functions into a 504.
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 5000,
+    socketTimeoutMS: 8000,
+    maxPoolSize: 5,
   });
 
   await client.connect();

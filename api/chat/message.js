@@ -6,9 +6,18 @@ import { emailService } from '../_lib/email-service.js';
 
 export const config = { runtime: 'nodejs' };
 
+function withTimeout(promise, ms, label) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    }),
+  ]);
+}
+
 async function sendLeadEmailBackground(sessionId) {
   try {
-    const db = await connectDB();
+    const db = await withTimeout(connectDB(), 5000, 'DB connect');
     const inquiry = await db.collection('inquiries').findOne({ session_id: sessionId });
     if (inquiry) {
       await emailService.sendLeadNotification(inquiry);
@@ -30,91 +39,103 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing session_id or message' });
     }
 
-    const db = await connectDB();
+    let db = null;
+    let isNewInquiry = false;
+    let conversationHistory = [];
 
-    // Save user message
-    const userMessage = {
-      id: uuidv4(),
-      session_id,
-      role: 'user',
-      content: message,
-      timestamp: new Date(),
-    };
-    await db.collection('chat_messages').insertOne(userMessage);
+    // DB is best-effort. Never block chat generation on DB availability.
+    try {
+      db = await withTimeout(connectDB(), 5000, 'DB connect');
 
-    // Check if this is a new inquiry
-    const inquiry = await db.collection('inquiries').findOne({ session_id });
-    const isNewInquiry = !inquiry;
-
-    if (isNewInquiry) {
-      const inquiryData = {
+      // Save user message
+      const userMessage = {
         id: uuidv4(),
         session_id,
-        name: null,
-        email: null,
-        phone: null,
-        project_type: null,
-        requirements: message,
-        conversation_history: [
-          {
-            role: 'user',
-            content: message,
-            timestamp: new Date().toISOString(),
-          },
-        ],
-        status: 'pending',
-        created_at: new Date(),
+        role: 'user',
+        content: message,
+        timestamp: new Date(),
       };
-      await db.collection('inquiries').insertOne(inquiryData);
-    } else {
-      await db.collection('inquiries').updateOne(
-        { session_id },
-        {
-          $push: {
-            conversation_history: {
+      await db.collection('chat_messages').insertOne(userMessage);
+
+      const inquiry = await db.collection('inquiries').findOne({ session_id });
+      isNewInquiry = !inquiry;
+
+      if (isNewInquiry) {
+        const inquiryData = {
+          id: uuidv4(),
+          session_id,
+          name: null,
+          email: null,
+          phone: null,
+          project_type: null,
+          requirements: message,
+          conversation_history: [
+            {
               role: 'user',
               content: message,
               timestamp: new Date().toISOString(),
             },
-          },
-        }
-      );
+          ],
+          status: 'pending',
+          created_at: new Date(),
+        };
+        await db.collection('inquiries').insertOne(inquiryData);
+      } else {
+        await db.collection('inquiries').updateOne(
+          { session_id },
+          {
+            $push: {
+              conversation_history: {
+                role: 'user',
+                content: message,
+                timestamp: new Date().toISOString(),
+              },
+            },
+          }
+        );
+      }
+
+      conversationHistory =
+        (await db.collection('inquiries').findOne({ session_id }))?.conversation_history || [];
+    } catch (dbError) {
+      console.error('DB unavailable, continuing without persistence:', dbError.message);
+      db = null;
+      isNewInquiry = false;
+      conversationHistory = [];
     }
 
-    // Get conversation history for context
-    const conversationHistory =
-      (await db.collection('inquiries').findOne({ session_id }))?.conversation_history || [];
-
-    // Get response from chatbot
     const response = await getChatResponse(session_id, message, conversationHistory);
 
-    // Save assistant message
-    const assistantMessage = {
-      id: uuidv4(),
-      session_id,
-      role: 'assistant',
-      content: response,
-      timestamp: new Date(),
-    };
-    await db.collection('chat_messages').insertOne(assistantMessage);
+    if (db) {
+      try {
+        const assistantMessage = {
+          id: uuidv4(),
+          session_id,
+          role: 'assistant',
+          content: response,
+          timestamp: new Date(),
+        };
+        await db.collection('chat_messages').insertOne(assistantMessage);
 
-    // Update inquiry with assistant response
-    await db.collection('inquiries').updateOne(
-      { session_id },
-      {
-        $push: {
-          conversation_history: {
-            role: 'assistant',
-            content: response,
-            timestamp: new Date().toISOString(),
-          },
-        },
+        await db.collection('inquiries').updateOne(
+          { session_id },
+          {
+            $push: {
+              conversation_history: {
+                role: 'assistant',
+                content: response,
+                timestamp: new Date().toISOString(),
+              },
+            },
+          }
+        );
+
+        if (isNewInquiry) {
+          waitUntil(sendLeadEmailBackground(session_id));
+        }
+      } catch (persistError) {
+        console.error('Failed to persist assistant response:', persistError.message);
       }
-    );
-
-    // Send email notification for new inquiries (background, non-blocking)
-    if (isNewInquiry) {
-      waitUntil(sendLeadEmailBackground(session_id));
     }
 
     res.json({
