@@ -2,7 +2,10 @@
   "version": 2,
   "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend/build",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
   "env": {
-    "REACT_APP_API_URL": "https://www.kbeatsofficial.com/api"
+    "REACT_APP_API_URL": "/api"
   }
 }
