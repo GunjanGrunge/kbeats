@@ -36,7 +36,7 @@ function httpsRequest(options, body) {
 export async function getChatResponse(sessionId, userMessage, conversationHistory = []) {
   try {
     const region = process.env.AWS_REGION || 'us-east-1';
-    const modelId = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
+    const modelId = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
     const messages = [];
     if (conversationHistory && conversationHistory.length > 0) {
