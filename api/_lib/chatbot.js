@@ -1,4 +1,6 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
+import https from 'https';
 
 const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings. 
 
@@ -26,6 +28,9 @@ function getBedrockClient() {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
+    requestHandler: new NodeHttpHandler({
+      httpsAgent: new https.Agent({ keepAlive: false }),
+    }),
   });
 }
 
