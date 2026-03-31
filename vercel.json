@@ -1,9 +1,14 @@
 {
   "version": 2,
+  "buildCommand": "cd frontend && npm run build",
+  "installCommand": "cd frontend && npm install --legacy-peer-deps",
+  "outputDirectory": "frontend/build",
+  "framework": "create-react-app",
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "api/server.js"
+      "dest": "api/server.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
     },
     {
       "src": "/static/(.*)",
@@ -11,6 +16,18 @@
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
       }
+    },
+    {
+      "src": "/(.*\\.json)$",
+      "dest": "/frontend/build/$1"
+    },
+    {
+      "src": "/(.*\\.txt)$",
+      "dest": "/frontend/build/$1"
+    },
+    {
+      "src": "/(.*\\.ico)$",
+      "dest": "/frontend/build/$1"
     },
     {
       "src": "/(.*)",
