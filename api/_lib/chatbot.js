@@ -1,6 +1,6 @@
-import { BedrockRuntimeClient, ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
+import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
 
-const MODEL_ARN = 'arn:aws:bedrock:us-east-1:751289209169:inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0';
+const MODEL_ID = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
 const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings.
 
@@ -40,29 +40,31 @@ export async function getChatResponse(sessionId, userMessage, conversationHistor
   try {
     const client = getClient();
 
-    // Build Converse API messages (content must be array of blocks)
     const messages = [];
     if (conversationHistory && conversationHistory.length > 0) {
       for (const msg of conversationHistory) {
         if (msg.role === 'user' || msg.role === 'assistant') {
-          messages.push({
-            role: msg.role,
-            content: [{ text: msg.content || '' }],
-          });
+          messages.push({ role: msg.role, content: msg.content || '' });
         }
       }
     }
-    messages.push({ role: 'user', content: [{ text: userMessage }] });
+    messages.push({ role: 'user', content: userMessage });
 
-    const command = new ConverseCommand({
-      modelId: MODEL_ARN,
-      system: [{ text: SYSTEM_MESSAGE }],
-      messages,
-      inferenceConfig: { maxTokens: 1024 },
+    const command = new InvokeModelCommand({
+      modelId: MODEL_ID,
+      contentType: 'application/json',
+      accept: 'application/json',
+      body: JSON.stringify({
+        anthropic_version: 'bedrock-2023-05-31',
+        max_tokens: 1024,
+        system: SYSTEM_MESSAGE,
+        messages,
+      }),
     });
 
     const response = await client.send(command);
-    return response.output?.message?.content?.[0]?.text || '';
+    const parsed = JSON.parse(Buffer.from(response.body).toString('utf8'));
+    return parsed.content?.[0]?.text || '';
   } catch (error) {
     console.error('Error in chatbot:', error.message);
     return "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!";
