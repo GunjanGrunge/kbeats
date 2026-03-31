@@ -44,11 +44,11 @@ export async function getChatResponse(sessionId, userMessage, conversationHistor
     if (conversationHistory && conversationHistory.length > 0) {
       for (const msg of conversationHistory) {
         if (msg.role === 'user' || msg.role === 'assistant') {
-          messages.push({ role: msg.role, content: msg.content || '' });
+          messages.push({ role: msg.role, content: [{ type: 'text', text: msg.content || '' }] });
         }
       }
     }
-    messages.push({ role: 'user', content: userMessage });
+    messages.push({ role: 'user', content: [{ type: 'text', text: userMessage }] });
 
     const command = new InvokeModelCommand({
       modelId: MODEL_ID,
