@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Loader2, Headphones } from 'lucide-react';
 import './ChatbotWidget.css';
 
-const API = process.env.REACT_APP_BACKEND_URL
-  ? `${process.env.REACT_APP_BACKEND_URL}/api`
-  : '/api';
+const API = '/api';
 
 const ChatbotWidget = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([]);
