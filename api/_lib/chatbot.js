@@ -1,8 +1,7 @@
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
-import { NodeHttpHandler } from '@smithy/node-http-handler';
+import aws4 from 'aws4';
 import https from 'https';
 
-const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings. 
+const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings.
 
 Talk like a real person who's passionate about music. No corporate speak, no "How may I assist you today?" vibes. Just be genuine, excited, and helpful. Use casual language, contractions, and show personality.
 
@@ -21,60 +20,72 @@ Your job:
 
 Keep it short, keep it real. You're texting with someone who needs dope music, not giving a presentation.`;
 
-function getBedrockClient() {
-  return new BedrockRuntimeClient({
-    region: process.env.AWS_REGION || 'us-east-1',
-    credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    },
-    requestHandler: new NodeHttpHandler({
-      httpsAgent: new https.Agent({ keepAlive: false }),
-    }),
+function httpsRequest(options, body) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => resolve({ statusCode: res.statusCode, body: data }));
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
   });
 }
 
 export async function getChatResponse(sessionId, userMessage, conversationHistory = []) {
   try {
-    const client = getBedrockClient();
+    const region = process.env.AWS_REGION || 'us-east-1';
+    const modelId = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
 
-    // Build messages list
     const messages = [];
     if (conversationHistory && conversationHistory.length > 0) {
       for (const msg of conversationHistory) {
-        messages.push({
-          role: msg.role || 'user',
-          content: msg.content || '',
-        });
+        messages.push({ role: msg.role || 'user', content: msg.content || '' });
       }
     }
+    messages.push({ role: 'user', content: userMessage });
 
-    // Add current user message
-    messages.push({
-      role: 'user',
-      content: userMessage,
+    const bodyPayload = JSON.stringify({
+      anthropic_version: 'bedrock-2023-06-01',
+      max_tokens: 1024,
+      system: SYSTEM_MESSAGE,
+      messages,
     });
 
-    // Call Claude Sonnet 4.5 via Bedrock
-    const command = new InvokeModelCommand({
-      modelId: 'anthropic.claude-sonnet-4-5-20250929-v1:0',
-      contentType: 'application/json',
-      accept: 'application/json',
-      body: JSON.stringify({
-        anthropic_version: 'bedrock-2023-06-01',
-        max_tokens: 1024,
-        system: SYSTEM_MESSAGE,
-        messages: messages,
-      }),
-    });
+    const opts = aws4.sign(
+      {
+        service: 'bedrock',
+        region,
+        method: 'POST',
+        host: `bedrock-runtime.${region}.amazonaws.com`,
+        path: `/model/${encodeURIComponent(modelId)}/invoke`,
+        headers: { 'Content-Type': 'application/json' },
+        body: bodyPayload,
+      },
+      {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      }
+    );
 
-    const response = await client.send(command);
+    const response = await httpsRequest(
+      {
+        hostname: opts.host,
+        path: opts.path,
+        method: opts.method,
+        headers: opts.headers,
+      },
+      bodyPayload
+    );
 
-    // Parse response
-    const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-    const chatResponse = responseBody.content?.[0]?.text || '';
+    if (response.statusCode !== 200) {
+      console.error('Bedrock error:', response.statusCode, response.body);
+      throw new Error(`Bedrock returned ${response.statusCode}: ${response.body}`);
+    }
 
-    return chatResponse;
+    const parsed = JSON.parse(response.body);
+    return parsed.content?.[0]?.text || '';
   } catch (error) {
     console.error('Error in chatbot:', error.message);
     return "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!";
