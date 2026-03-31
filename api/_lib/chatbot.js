@@ -1,4 +1,6 @@
-import https from 'https';
+import { BedrockRuntimeClient, ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
+
+const MODEL_ARN = 'arn:aws:bedrock:us-east-1:751289209169:inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
 const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings.
 
@@ -19,59 +21,48 @@ Your job:
 
 Keep it short, keep it real. You're texting with someone who needs dope music, not giving a presentation.`;
 
-function httpsRequest(options, body) {
-  return new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => resolve({ statusCode: res.statusCode, body: data }));
+let bedrockClient = null;
+
+function getClient() {
+  if (!bedrockClient) {
+    bedrockClient = new BedrockRuntimeClient({
+      region: process.env.AWS_REGION || 'us-east-1',
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      },
     });
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
+  }
+  return bedrockClient;
 }
 
 export async function getChatResponse(sessionId, userMessage, conversationHistory = []) {
   try {
-    const region = process.env.AWS_REGION || 'us-east-1';
-    const modelId = 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
+    const client = getClient();
 
+    // Build Converse API messages (content must be array of blocks)
     const messages = [];
     if (conversationHistory && conversationHistory.length > 0) {
       for (const msg of conversationHistory) {
-        messages.push({ role: msg.role || 'user', content: msg.content || '' });
+        if (msg.role === 'user' || msg.role === 'assistant') {
+          messages.push({
+            role: msg.role,
+            content: [{ text: msg.content || '' }],
+          });
+        }
       }
     }
-    messages.push({ role: 'user', content: userMessage });
+    messages.push({ role: 'user', content: [{ text: userMessage }] });
 
-    const bodyPayload = JSON.stringify({
-      anthropic_version: 'bedrock-2023-05-31',
-      max_tokens: 1024,
-      system: SYSTEM_MESSAGE,
+    const command = new ConverseCommand({
+      modelId: MODEL_ARN,
+      system: [{ text: SYSTEM_MESSAGE }],
       messages,
+      inferenceConfig: { maxTokens: 1024 },
     });
 
-    const response = await httpsRequest(
-      {
-        hostname: `bedrock-runtime.${region}.amazonaws.com`,
-        path: `/model/${encodeURIComponent(modelId)}/invoke`,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.AWS_BEARER_TOKEN_BEDROCK}`,
-        },
-      },
-      bodyPayload
-    );
-
-    if (response.statusCode !== 200) {
-      console.error('Bedrock error:', response.statusCode, response.body);
-      throw new Error(`Bedrock returned ${response.statusCode}: ${response.body}`);
-    }
-
-    const parsed = JSON.parse(response.body);
-    return parsed.content?.[0]?.text || '';
+    const response = await client.send(command);
+    return response.output?.message?.content?.[0]?.text || '';
   } catch (error) {
     console.error('Error in chatbot:', error.message);
     return "Yo, my bad - something's acting up. Hit me up on our socials or try again in a sec!";
