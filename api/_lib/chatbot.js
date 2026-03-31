@@ -1,4 +1,3 @@
-import aws4 from 'aws4';
 import https from 'https';
 
 const SYSTEM_MESSAGE = `You're chatting for K Beats - a music production crew that creates fire tracks for everything from YouTube vlogs to weddings.
@@ -47,34 +46,21 @@ export async function getChatResponse(sessionId, userMessage, conversationHistor
     messages.push({ role: 'user', content: userMessage });
 
     const bodyPayload = JSON.stringify({
-      anthropic_version: 'bedrock-2023-06-01',
+      anthropic_version: 'bedrock-2023-05-31',
       max_tokens: 1024,
       system: SYSTEM_MESSAGE,
       messages,
     });
 
-    const opts = aws4.sign(
-      {
-        service: 'bedrock',
-        region,
-        method: 'POST',
-        host: `bedrock-runtime.${region}.amazonaws.com`,
-        path: `/model/${encodeURIComponent(modelId)}/invoke`,
-        headers: { 'Content-Type': 'application/json' },
-        body: bodyPayload,
-      },
-      {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      }
-    );
-
     const response = await httpsRequest(
       {
-        hostname: opts.host,
-        path: opts.path,
-        method: opts.method,
-        headers: opts.headers,
+        hostname: `bedrock-runtime.${region}.amazonaws.com`,
+        path: `/model/${encodeURIComponent(modelId)}/invoke`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.AWS_BEARER_TOKEN_BEDROCK}`,
+        },
       },
       bodyPayload
     );
