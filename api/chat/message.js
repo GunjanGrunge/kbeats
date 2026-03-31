@@ -4,6 +4,8 @@ import { connectDB } from '../_lib/db.js';
 import { getChatResponse } from '../_lib/chatbot.js';
 import { emailService } from '../_lib/email-service.js';
 
+export const config = { runtime: 'nodejs' };
+
 async function sendLeadEmailBackground(sessionId) {
   try {
     const db = await connectDB();
